@@ -1,0 +1,22 @@
+{
+  "name": "ogonmeh-front",
+  "version": "1.0.0",
+  "description": "오곤메 서비스의 Front-end 입니다.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jangsumin/ogonmeh-front.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jangsumin/ogonmeh-front/issues"
+  },
+  "homepage": "https://github.com/jangsumin/ogonmeh-front#readme",
+  "dependencies": {
+    "typescript": "^5.0.4"
+  }
+}
