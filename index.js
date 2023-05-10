@@ -1,18 +1,13 @@
-const modal = document.querySelector('.modal');
+const dropdown = document.querySelector('.dropdown');
 const hamburgerButton = document.querySelector('.hamburger-button');
 
-let isModalOn = false;
+let isDropdownOpen = false;
 hamburgerButton.addEventListener('click', () => {
-  if (!isModalOn) {
-    modal.style.display = 'block';
-    modal.style.height = '200px';
-    modal.classList.remove('off');
-    modal.classList.add('on');
-    isModalOn = !isModalOn;
+  if (!isDropdownOpen) {
+    dropdown.style.height = '200px';
+    isDropdownOpen = !isDropdownOpen;
   } else {
-    modal.style.height = '0';
-    modal.classList.remove('on');
-    modal.classList.add('off');
-    isModalOn = !isModalOn;
+    dropdown.style.height = '0';
+    isDropdownOpen = !isDropdownOpen;
   }
 });
