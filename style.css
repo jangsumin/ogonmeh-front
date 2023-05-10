@@ -37,6 +37,16 @@ header .main-nav-bar h1 {
   color: var(--sub-ft-color);
 }
 
+header .hamberger-button {
+  width: 35px;
+  background-color: var(--main-nav-color);
+  background-image: url('./public/assets/hamburger_button.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  border: none;
+}
+
 header .sub-nav-bar {
   width: 95%;
   height: 40px;
@@ -71,6 +81,13 @@ main .date-button {
 }
 
 main .date-button .yesterday-menu-button {
+  width: 30px;
+  background-color: var(--main-bg-color);
+  background-image: url('./public/assets/left_button.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border: none;
 }
 
 main .date-button h2 {
@@ -86,6 +103,13 @@ main .date-button h2 {
 }
 
 main .date-button .tomorrow-menu-button {
+  width: 30px;
+  background-color: var(--main-bg-color);
+  background-image: url('./public/assets/right_button.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+  border: none;
 }
 
 main .hot-corner,
