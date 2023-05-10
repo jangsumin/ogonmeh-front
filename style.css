@@ -61,7 +61,6 @@ main {
   grid-template-rows: min-content;
   grid-template-columns: 1fr 1fr;
   width: 80%;
-  height: 100%;
   box-sizing: border-box;
   margin: 0 auto;
   padding: 15px 10px;
@@ -144,4 +143,16 @@ main .korean-food-corner div {
   border: 0px solid var(--main-bd-color);
   border-radius: 4px;
   box-shadow: 0 1px 3px var(--main-bd-color);
+}
+
+footer {
+  width: 100%;
+  margin: 40px auto;
+}
+
+footer p {
+  display: block;
+  width: fit-content;
+  margin: 10px auto;
+  font-size: 15px;
 }
