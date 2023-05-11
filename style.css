@@ -247,12 +247,27 @@ main .korean-food-corner h2 {
 main .hot-corner div,
 main .salad-corner div,
 main .korean-food-corner div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   height: 40px;
   margin: 5px auto;
   border: 0px solid var(--main-bd-color);
   border-radius: 4px;
   box-shadow: 0 1px 3px var(--main-bd-color);
+}
+
+main .hot-corner div {
+  color: red;
+}
+
+main .salad-corner div {
+  color: green;
+}
+
+main .korean-food-corner div {
+  color: blue;
 }
 
 footer {
