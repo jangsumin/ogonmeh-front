@@ -11,3 +11,18 @@ hamburgerButton.addEventListener('click', () => {
     isDropdownOpen = !isDropdownOpen;
   }
 });
+
+const managerLoginButton = document.querySelector('.manager-login-button');
+const modalWrap = document.querySelector('.modal-wrap');
+const modalWrapBg = document.querySelector('.modal-wrap-bg');
+const modalCloseButton = document.querySelector('.modal-close-button');
+
+managerLoginButton.addEventListener('click', () => {
+  modalWrap.classList.remove('hidden');
+});
+modalWrapBg.addEventListener('click', () => {
+  modalWrap.classList.add('hidden');
+})
+modalCloseButton.addEventListener('click', () => {
+  modalWrap.classList.add('hidden');
+});
