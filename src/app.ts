@@ -35,10 +35,10 @@ modalCloseButton?.addEventListener("click", () => {
 });
 
 const dateText: HTMLInputElement | null = document.querySelector(".date-text");
-const todayDate: Date = new Date();
-const todayYear: string = String(todayDate.getFullYear());
-const todayMonth: string = String(todayDate.getMonth() + 1);
-const todayDay: string = String(todayDate.getDate());
+let todayDate: Date = new Date();
+let todayYear: string = String(todayDate.getFullYear());
+let todayMonth: string = String(todayDate.getMonth() + 1);
+let todayDay: string = String(todayDate.getDate());
 if (dateText) {
   dateText.innerText =
     todayYear +
@@ -47,3 +47,38 @@ if (dateText) {
     "." +
     todayDay.padStart(2, "0");
 }
+
+const yesterdayMenuButton: HTMLInputElement | null = document.querySelector(
+  ".yesterday-menu-button"
+);
+const tomorrowMenuButton: HTMLInputElement | null = document.querySelector(
+  ".tomorrow-menu-button"
+);
+yesterdayMenuButton?.addEventListener("click", () => {
+  todayDate = new Date(todayDate.setDate(todayDate.getDate() - 1));
+  todayYear = String(todayDate.getFullYear());
+  todayMonth = String(todayDate.getMonth() + 1);
+  todayDay = String(todayDate.getDate());
+  if (dateText) {
+    dateText.innerText =
+      todayYear +
+      "." +
+      todayMonth.padStart(2, "0") +
+      "." +
+      todayDay.padStart(2, "0");
+  }
+});
+tomorrowMenuButton?.addEventListener("click", () => {
+  todayDate = new Date(todayDate.setDate(todayDate.getDate() + 1));
+  todayYear = String(todayDate.getFullYear());
+  todayMonth = String(todayDate.getMonth() + 1);
+  todayDay = String(todayDate.getDate());
+  if (dateText) {
+    dateText.innerText =
+      todayYear +
+      "." +
+      todayMonth.padStart(2, "0") +
+      "." +
+      todayDay.padStart(2, "0");
+  }
+});

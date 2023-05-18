@@ -28,10 +28,10 @@ modalCloseButton === null || modalCloseButton === void 0 ? void 0 : modalCloseBu
     modalWrap === null || modalWrap === void 0 ? void 0 : modalWrap.classList.add("hidden");
 });
 const dateText = document.querySelector(".date-text");
-const todayDate = new Date();
-const todayYear = String(todayDate.getFullYear());
-const todayMonth = String(todayDate.getMonth() + 1);
-const todayDay = String(todayDate.getDate());
+let todayDate = new Date();
+let todayYear = String(todayDate.getFullYear());
+let todayMonth = String(todayDate.getMonth() + 1);
+let todayDay = String(todayDate.getDate());
 if (dateText) {
     dateText.innerText =
         todayYear +
@@ -40,3 +40,33 @@ if (dateText) {
             "." +
             todayDay.padStart(2, "0");
 }
+const yesterdayMenuButton = document.querySelector(".yesterday-menu-button");
+const tomorrowMenuButton = document.querySelector(".tomorrow-menu-button");
+yesterdayMenuButton === null || yesterdayMenuButton === void 0 ? void 0 : yesterdayMenuButton.addEventListener("click", () => {
+    todayDate = new Date(todayDate.setDate(todayDate.getDate() - 1));
+    todayYear = String(todayDate.getFullYear());
+    todayMonth = String(todayDate.getMonth() + 1);
+    todayDay = String(todayDate.getDate());
+    if (dateText) {
+        dateText.innerText =
+            todayYear +
+                "." +
+                todayMonth.padStart(2, "0") +
+                "." +
+                todayDay.padStart(2, "0");
+    }
+});
+tomorrowMenuButton === null || tomorrowMenuButton === void 0 ? void 0 : tomorrowMenuButton.addEventListener("click", () => {
+    todayDate = new Date(todayDate.setDate(todayDate.getDate() + 1));
+    todayYear = String(todayDate.getFullYear());
+    todayMonth = String(todayDate.getMonth() + 1);
+    todayDay = String(todayDate.getDate());
+    if (dateText) {
+        dateText.innerText =
+            todayYear +
+                "." +
+                todayMonth.padStart(2, "0") +
+                "." +
+                todayDay.padStart(2, "0");
+    }
+});
