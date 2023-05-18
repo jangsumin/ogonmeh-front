@@ -33,3 +33,17 @@ modalWrapBg?.addEventListener("click", () => {
 modalCloseButton?.addEventListener("click", () => {
   modalWrap?.classList.add("hidden");
 });
+
+const dateText: HTMLInputElement | null = document.querySelector(".date-text");
+const todayDate: Date = new Date();
+const todayYear: string = String(todayDate.getFullYear());
+const todayMonth: string = String(todayDate.getMonth() + 1);
+const todayDay: string = String(todayDate.getDate());
+if (dateText) {
+  dateText.innerText =
+    todayYear +
+    "." +
+    todayMonth.padStart(2, "0") +
+    "." +
+    todayDay.padStart(2, "0");
+}

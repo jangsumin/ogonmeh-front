@@ -27,3 +27,16 @@ modalWrapBg === null || modalWrapBg === void 0 ? void 0 : modalWrapBg.addEventLi
 modalCloseButton === null || modalCloseButton === void 0 ? void 0 : modalCloseButton.addEventListener("click", () => {
     modalWrap === null || modalWrap === void 0 ? void 0 : modalWrap.classList.add("hidden");
 });
+const dateText = document.querySelector(".date-text");
+const todayDate = new Date();
+const todayYear = String(todayDate.getFullYear());
+const todayMonth = String(todayDate.getMonth() + 1);
+const todayDay = String(todayDate.getDate());
+if (dateText) {
+    dateText.innerText =
+        todayYear +
+            "." +
+            todayMonth.padStart(2, "0") +
+            "." +
+            todayDay.padStart(2, "0");
+}
