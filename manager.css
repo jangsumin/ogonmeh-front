@@ -1,1 +1,130 @@
 @import "reset.css";
+
+:root {
+  --main-bg-color: #f8f8f8;
+  --main-nav-color: #333333;
+  --sub-nav-color: #e66060;
+  --main-bd-color: #c4c4c4;
+  --main-ft-color: #000000;
+  --sub-ft-color: #ffffff;
+}
+
+html {
+  font-family: "Jua", sans-serif;
+}
+
+body {
+  background-color: var(--main-bg-color);
+}
+
+.wrap {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.date-section {
+  height: 400px;
+  box-sizing: border-box;
+  margin: 20px 0;
+  padding: 20px;
+  background-color: var(--sub-nav-color);
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  height: 40px;
+  padding: 0 5px;
+  font-size: 30px;
+  background-color: var(--main-bg-color);
+  border-radius: 4px;
+}
+
+.date-list {
+  width: 100px;
+  height: 310px;
+  box-sizing: border-box;
+  margin: 10px 0;
+  padding: 5px 0;
+  background-color: var(--main-bd-color);
+  border-radius: 4px;
+}
+
+.date-list li {
+  cursor: pointer;
+  width: fit-content;
+  box-sizing: border-box;
+  margin: 5px auto;
+  padding: 5px;
+  font-size: 18px;
+  text-align: center;
+  border-bottom: var(--main-nav-color) 1px solid;
+}
+
+.menu-section {
+  position: relative;
+  height: 250px;
+  box-sizing: border-box;
+  margin: 20px 0;
+  padding: 20px;
+  background-color: var(--sub-nav-color);
+}
+
+.date-text {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  height: 30px;
+  padding: 0 5px;
+  font-size: 25px;
+  background-color: var(--main-bg-color);
+  border-radius: 4px;
+}
+
+.update-button {
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-family: "Jua", sans-serif;
+  font-size: 15px;
+  border-radius: 4px;
+  border: none;
+}
+
+.korean-food-corner,
+.hot-corner,
+.salad-corner {
+  display: flex;
+  height: 40px;
+  align-items: center;
+  box-sizing: border-box;
+  margin: 20px 0;
+}
+
+.korean-food-corner li:first-child,
+.hot-corner li:first-child,
+.salad-corner li:first-child {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 130px;
+  height: 30px;
+  box-sizing: border-box;
+  margin-right: 5px;
+  padding: 0 5px;
+  font-size: 20px;
+  text-align: center;
+  background-color: var(--main-bd-color);
+  border-radius: 4px;
+}
+
+.korean-food-corner li:not(:first-child),
+.hot-corner li:not(:first-child),
+.salad-corner li:not(:first-child) {
+  padding: 0 5px;
+  font-size: 17px;
+  border-right: var(--main-nav-color) 1px solid;
+}
