@@ -259,18 +259,6 @@ main .korean-food-corner div {
   box-shadow: 0 1px 3px var(--main-bd-color);
 }
 
-main .hot-corner div {
-  color: red;
-}
-
-main .salad-corner div {
-  color: green;
-}
-
-main .korean-food-corner div {
-  color: blue;
-}
-
 footer {
   width: 100%;
   margin: 40px auto;
