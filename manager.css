@@ -7,6 +7,7 @@
   --main-bd-color: #c4c4c4;
   --main-ft-color: #000000;
   --sub-ft-color: #ffffff;
+  --main-btn-color: #6ccccb;
 }
 
 html {
@@ -19,18 +20,25 @@ body {
 
 .wrap {
   width: 80%;
-  min-width: 800px;
-  max-width: 1000px;
+  min-width: 900px;
   margin: 0 auto;
   padding: 20px;
 }
 
+.upper-wrap {
+  display: flex;
+  gap: 5px;
+}
+
 .date-section {
-  height: 400px;
+  width: 400px;
+  height: 450px;
   box-sizing: border-box;
-  margin: 20px 0;
+  margin: 10px 0;
   padding: 20px;
-  background-color: var(--sub-nav-color);
+  background-color: var(--sub-ft-color);
+  border-radius: 4px;
+  box-shadow: 0 1px 3px var(--main-bd-color);
 }
 
 .title {
@@ -40,15 +48,25 @@ body {
   height: 40px;
   padding: 0 5px;
   font-size: 30px;
-  background-color: var(--main-bg-color);
+  color: var(--sub-ft-color);
+  background-color: var(--main-nav-color);
   border-radius: 4px;
 }
 
+.date-list-wrap {
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  margin: 30px auto;
+}
+
 .date-list {
-  width: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 90px;
   height: 310px;
   box-sizing: border-box;
-  margin: 10px 0;
   padding: 5px 0;
   background-color: var(--main-bd-color);
   border-radius: 4px;
@@ -62,16 +80,90 @@ body {
   padding: 5px;
   font-size: 18px;
   text-align: center;
-  border-bottom: var(--main-nav-color) 1px solid;
 }
 
-.menu-section {
+.date-list :not(li:last-child) {
+  border-bottom: 1px solid var(--main-nav-color);
+}
+
+.view-section {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  height: 450px;
+  box-sizing: border-box;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: var(--sub-ft-color);
+  border-radius: 4px;
+  box-shadow: 0 1px 3px var(--main-bd-color);
+}
+
+.view-section .korean-food-corner {
+  grid-row: span 2;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 10px 5px;
+  border: 1px dashed var(--main-bd-color);
+}
+
+.view-section .hot-corner,
+.view-section .salad-corner {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 10px 5px;
+  border: 1px dashed var(--main-bd-color);
+}
+
+.view-section .hot-corner h2,
+.view-section .salad-corner h2,
+.view-section .korean-food-corner h2 {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  height: 25px;
+  margin-bottom: 2px;
+  padding: 3px;
+  font-size: 17px;
+  background-color: var(--main-bd-color);
+  border-radius: 4px;
+}
+
+.view-section .hot-corner div,
+.view-section .salad-corner div,
+.view-section .korean-food-corner div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 25px;
+  box-sizing: border-box;
+  padding: 5px 0;
+  font-size: 15px;
+}
+
+.menu-input-form {
   position: relative;
   height: 250px;
   box-sizing: border-box;
-  margin: 20px 0;
+  margin: 10px 0;
   padding: 20px;
-  background-color: var(--sub-nav-color);
+  background-color: var(--sub-ft-color);
+  border-radius: 4px;
+  box-shadow: 0 1px 3px var(--main-bd-color);
 }
 
 .date-text {
@@ -81,7 +173,8 @@ body {
   height: 30px;
   padding: 0 5px;
   font-size: 25px;
-  background-color: var(--main-bg-color);
+  color: var(--sub-ft-color);
+  background-color: var(--main-nav-color);
   border-radius: 4px;
 }
 
@@ -90,25 +183,29 @@ body {
   position: absolute;
   top: 20px;
   right: 20px;
+  width: 100px;
+  height: 30px;
   font-family: "Jua", sans-serif;
   font-size: 15px;
-  border-radius: 4px;
+  color: var(--sub-ft-color);
+  background-color: var(--main-btn-color);
   border: none;
+  border-radius: 4px;
 }
 
-.korean-food-corner,
-.hot-corner,
-.salad-corner {
+.menu-input-form .korean-food-corner,
+.menu-input-form .hot-corner,
+.menu-input-form .salad-corner {
   display: flex;
-  height: 40px;
   align-items: center;
+  height: 40px;
   box-sizing: border-box;
   margin: 20px 0;
 }
 
-.korean-food-corner li:first-child,
-.hot-corner li:first-child,
-.salad-corner li:first-child {
+.menu-input-form .korean-food-corner li:first-child,
+.menu-input-form .hot-corner li:first-child,
+.menu-input-form .salad-corner li:first-child {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -123,10 +220,33 @@ body {
   border-radius: 4px;
 }
 
-.korean-food-corner li:not(:first-child),
-.hot-corner li:not(:first-child),
-.salad-corner li:not(:first-child) {
+.menu-input-form .korean-food-corner li input {
+  width: 85px;
+  height: 30px;
+  box-sizing: border-box;
+  margin-right: 5px;
+  padding: 0 2px;
+  font-size: 15px;
+  border: 1px dashed var(--main-bd-color);
+  border-radius: 4px;
+}
+
+.menu-input-form .hot-corner li input,
+.menu-input-form .salad-corner li input {
+  width: 120px;
+  height: 30px;
+  box-sizing: border-box;
+  margin-right: 5px;
+  padding: 0 2px;
+  font-size: 15px;
+  border: 1px dashed var(--main-bd-color);
+  border-radius: 4px;
+}
+
+.menu-section .korean-food-corner li:not(:first-child),
+.menu-section .hot-corner li:not(:first-child),
+.menu-section .salad-corner li:not(:first-child) {
   padding: 0 5px;
   font-size: 17px;
-  border-right: var(--main-nav-color) 1px solid;
+  border-right: 1px solid var(--main-nav-color);
 }
