@@ -47,4 +47,20 @@ updateButton?.addEventListener("click", () => {
     }
   }
   console.log(data);
+
+  const URL: string = "http://localhost:4000/submit";
+  fetch(URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.text())
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
 });
