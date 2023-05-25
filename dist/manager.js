@@ -18,7 +18,7 @@ const SALAD_MENU = "salad-menu";
 updateButton === null || updateButton === void 0 ? void 0 : updateButton.addEventListener("click", () => {
     var _a, _b, _c, _d;
     if (form) {
-        data.date = String((_a = NamespaceManager.dateText) === null || _a === void 0 ? void 0 : _a.textContent);
+        data.date = String((_a = NamespaceManager.dateText) === null || _a === void 0 ? void 0 : _a.textContent).replace(/ \/ /g, "");
         formData = new FormData(form);
         for (let [key, value] of formData.entries()) {
             if (key.slice(0, -1) === KOREAN_FOOD_MENU) {

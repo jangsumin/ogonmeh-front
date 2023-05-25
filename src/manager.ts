@@ -26,7 +26,10 @@ const SALAD_MENU: String = "salad-menu";
 
 updateButton?.addEventListener("click", () => {
   if (form) {
-    data.date = String(NamespaceManager.dateText?.textContent);
+    data.date = String(NamespaceManager.dateText?.textContent).replace(
+      / \/ /g,
+      ""
+    );
     formData = new FormData(form);
     for (let [key, value] of formData.entries()) {
       if (key.slice(0, -1) === KOREAN_FOOD_MENU) {
