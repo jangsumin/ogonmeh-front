@@ -32,14 +32,17 @@ updateButton?.addEventListener("click", () => {
     );
     formData = new FormData(form);
     for (let [key, value] of formData.entries()) {
+      if (value === "") {
+        continue;
+      }
       if (key.slice(0, -1) === KOREAN_FOOD_MENU) {
-        data.koreanFoodCorner?.push(String(value));
+        data.koreanFoodCorner?.push(String(value).trim());
       }
       if (key.slice(0, -1) === HOT_MENU) {
-        data.hotCorner?.push(String(value));
+        data.hotCorner?.push(String(value).trim());
       }
       if (key.slice(0, -1) === SALAD_MENU) {
-        data.saladCorner?.push(String(value));
+        data.saladCorner?.push(String(value).trim());
       }
     }
   }

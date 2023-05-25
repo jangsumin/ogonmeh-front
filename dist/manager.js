@@ -21,14 +21,17 @@ updateButton === null || updateButton === void 0 ? void 0 : updateButton.addEven
         data.date = String((_a = NamespaceManager.dateText) === null || _a === void 0 ? void 0 : _a.textContent).replace(/ \/ /g, "");
         formData = new FormData(form);
         for (let [key, value] of formData.entries()) {
+            if (value === "") {
+                continue;
+            }
             if (key.slice(0, -1) === KOREAN_FOOD_MENU) {
-                (_b = data.koreanFoodCorner) === null || _b === void 0 ? void 0 : _b.push(String(value));
+                (_b = data.koreanFoodCorner) === null || _b === void 0 ? void 0 : _b.push(String(value).trim());
             }
             if (key.slice(0, -1) === HOT_MENU) {
-                (_c = data.hotCorner) === null || _c === void 0 ? void 0 : _c.push(String(value));
+                (_c = data.hotCorner) === null || _c === void 0 ? void 0 : _c.push(String(value).trim());
             }
             if (key.slice(0, -1) === SALAD_MENU) {
-                (_d = data.saladCorner) === null || _d === void 0 ? void 0 : _d.push(String(value));
+                (_d = data.saladCorner) === null || _d === void 0 ? void 0 : _d.push(String(value).trim());
             }
         }
     }
