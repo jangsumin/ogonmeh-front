@@ -7,16 +7,16 @@ var NamespaceManager;
 })(NamespaceManager || (NamespaceManager = {}));
 const updateButton = document.querySelector(".update-button");
 let formData;
-const data = {
-    koreanFoodCorner: [],
-    hotCorner: [],
-    saladCorner: [],
-};
 const KOREAN_FOOD_MENU = "korean-food-menu";
 const HOT_MENU = "hot-menu";
 const SALAD_MENU = "salad-menu";
 updateButton === null || updateButton === void 0 ? void 0 : updateButton.addEventListener("click", () => {
     var _a, _b, _c, _d;
+    const data = {
+        koreanFoodCorner: [],
+        hotCorner: [],
+        saladCorner: [],
+    };
     if (form) {
         data.date = String((_a = NamespaceManager.dateText) === null || _a === void 0 ? void 0 : _a.textContent).replace(/ \/ /g, "");
         formData = new FormData(form);
@@ -36,7 +36,7 @@ updateButton === null || updateButton === void 0 ? void 0 : updateButton.addEven
         }
     }
     console.log(data);
-    const URL = "http://localhost:4000/submit";
+    const URL = "http://localhost:4000/register";
     fetch(URL, {
         method: "POST",
         headers: {
@@ -44,7 +44,7 @@ updateButton === null || updateButton === void 0 ? void 0 : updateButton.addEven
         },
         body: JSON.stringify(data),
     })
-        .then((response) => response.text())
+        .then((response) => response.json())
         .then((result) => {
         console.log(result);
     })

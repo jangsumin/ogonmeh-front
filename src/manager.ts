@@ -14,17 +14,17 @@ namespace NamespaceManager {
 const updateButton: HTMLInputElement | null =
   document.querySelector(".update-button");
 let formData: FormData | null;
-const data: Menu = {
-  koreanFoodCorner: [],
-  hotCorner: [],
-  saladCorner: [],
-};
 
 const KOREAN_FOOD_MENU: String = "korean-food-menu";
 const HOT_MENU: String = "hot-menu";
 const SALAD_MENU: String = "salad-menu";
 
 updateButton?.addEventListener("click", () => {
+  const data: Menu = {
+    koreanFoodCorner: [],
+    hotCorner: [],
+    saladCorner: [],
+  };
   if (form) {
     data.date = String(NamespaceManager.dateText?.textContent).replace(
       / \/ /g,
@@ -48,7 +48,7 @@ updateButton?.addEventListener("click", () => {
   }
   console.log(data);
 
-  const URL: string = "http://localhost:4000/submit";
+  const URL: string = "http://localhost:4000/register";
   fetch(URL, {
     method: "POST",
     headers: {
@@ -56,7 +56,7 @@ updateButton?.addEventListener("click", () => {
     },
     body: JSON.stringify(data),
   })
-    .then((response) => response.text())
+    .then((response) => response.json())
     .then((result) => {
       console.log(result);
     })
