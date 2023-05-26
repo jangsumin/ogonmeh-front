@@ -20,6 +20,14 @@ const KOREAN_FOOD_MENU: String = "korean-food-menu";
 const HOT_MENU: String = "hot-menu";
 const SALAD_MENU: String = "salad-menu";
 
+// 처음 렌더링 시, 오늘의 날짜가 form에 나타나도록 설정
+if (NamespaceManager.dateText) {
+  NamespaceManager.dateText.textContent = [
+    String(NamespaceManager.todayDate.getFullYear()).slice(-2),
+    convertDateToString(NamespaceManager.todayDate),
+  ].join(" / ");
+}
+
 updateButton?.addEventListener("click", () => {
   const data: Menu = {
     koreanFoodCorner: [],

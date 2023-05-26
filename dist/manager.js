@@ -11,6 +11,13 @@ let formData;
 const KOREAN_FOOD_MENU = "korean-food-menu";
 const HOT_MENU = "hot-menu";
 const SALAD_MENU = "salad-menu";
+// 처음 렌더링 시, 오늘의 날짜가 form에 나타나도록 설정
+if (NamespaceManager.dateText) {
+    NamespaceManager.dateText.textContent = [
+        String(NamespaceManager.todayDate.getFullYear()).slice(-2),
+        convertDateToString(NamespaceManager.todayDate),
+    ].join(" / ");
+}
 updateButton === null || updateButton === void 0 ? void 0 : updateButton.addEventListener("click", () => {
     var _a, _b, _c, _d;
     const data = {
