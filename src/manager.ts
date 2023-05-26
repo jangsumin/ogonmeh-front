@@ -10,6 +10,7 @@ const form: HTMLFormElement | null = document.querySelector(".menu-input-form");
 namespace NamespaceManager {
   export const dateText: HTMLInputElement | null =
     document.querySelector(".date-text");
+  export const todayDate: Date = new Date();
 }
 const updateButton: HTMLInputElement | null =
   document.querySelector(".update-button");
@@ -63,4 +64,60 @@ updateButton?.addEventListener("click", () => {
     .catch((error) => {
       console.error(error);
     });
+});
+
+// 오늘로부터 28일동안의 날짜들을 렌더링
+function convertDateToString(date: Date): string {
+  const month: number = date.getMonth() + 1;
+  const day: number = date.getDate();
+  const dateStr: string = [
+    String(month).padStart(2, "0"),
+    String(day).padStart(2, "0"),
+  ].join(" / ");
+  return dateStr;
+}
+
+const datesInFourWeeks: string[] = [
+  convertDateToString(NamespaceManager.todayDate),
+];
+for (let i = 0; i < 28 - 1; i++) {
+  datesInFourWeeks.push(
+    convertDateToString(
+      new Date(
+        NamespaceManager.todayDate.setDate(
+          NamespaceManager.todayDate.getDate() + 1
+        )
+      )
+    )
+  );
+}
+
+const dateList1: HTMLInputElement | null =
+  document.querySelector(".date-list1");
+const dateList2: HTMLInputElement | null =
+  document.querySelector(".date-list2");
+const dateList3: HTMLInputElement | null =
+  document.querySelector(".date-list3");
+const dateList4: HTMLInputElement | null =
+  document.querySelector(".date-list4");
+
+function createListElement(
+  text: string,
+  dateList: HTMLInputElement | null
+): void {
+  const li: HTMLLIElement = document.createElement("li");
+  li.textContent = text;
+  dateList?.appendChild(li);
+}
+
+datesInFourWeeks.map((dateStr, idx) => {
+  if (Math.floor(idx / 7) === 0) {
+    createListElement(dateStr, dateList1);
+  } else if (Math.floor(idx / 7) === 1) {
+    createListElement(dateStr, dateList2);
+  } else if (Math.floor(idx / 7) === 2) {
+    createListElement(dateStr, dateList3);
+  } else if (Math.floor(idx / 7) === 3) {
+    createListElement(dateStr, dateList4);
+  }
 });

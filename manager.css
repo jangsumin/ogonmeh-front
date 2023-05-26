@@ -60,7 +60,7 @@ body {
   margin: 30px auto;
 }
 
-.date-list {
+.date-list-wrap ul {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -72,7 +72,7 @@ body {
   border-radius: 4px;
 }
 
-.date-list li {
+.date-list-wrap ul li {
   cursor: pointer;
   width: fit-content;
   box-sizing: border-box;
@@ -82,7 +82,7 @@ body {
   text-align: center;
 }
 
-.date-list :not(li:last-child) {
+.date-list-wrap ul :not(li:last-child) {
   border-bottom: 1px solid var(--main-nav-color);
 }
 

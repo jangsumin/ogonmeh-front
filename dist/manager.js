@@ -4,6 +4,7 @@ const form = document.querySelector(".menu-input-form");
 var NamespaceManager;
 (function (NamespaceManager) {
     NamespaceManager.dateText = document.querySelector(".date-text");
+    NamespaceManager.todayDate = new Date();
 })(NamespaceManager || (NamespaceManager = {}));
 const updateButton = document.querySelector(".update-button");
 let formData;
@@ -51,4 +52,43 @@ updateButton === null || updateButton === void 0 ? void 0 : updateButton.addEven
         .catch((error) => {
         console.error(error);
     });
+});
+// 오늘로부터 28일동안의 날짜들을 렌더링
+function convertDateToString(date) {
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const dateStr = [
+        String(month).padStart(2, "0"),
+        String(day).padStart(2, "0"),
+    ].join(" / ");
+    return dateStr;
+}
+const datesInFourWeeks = [
+    convertDateToString(NamespaceManager.todayDate),
+];
+for (let i = 0; i < 28 - 1; i++) {
+    datesInFourWeeks.push(convertDateToString(new Date(NamespaceManager.todayDate.setDate(NamespaceManager.todayDate.getDate() + 1))));
+}
+const dateList1 = document.querySelector(".date-list1");
+const dateList2 = document.querySelector(".date-list2");
+const dateList3 = document.querySelector(".date-list3");
+const dateList4 = document.querySelector(".date-list4");
+function createListElement(text, dateList) {
+    const li = document.createElement("li");
+    li.textContent = text;
+    dateList === null || dateList === void 0 ? void 0 : dateList.appendChild(li);
+}
+datesInFourWeeks.map((dateStr, idx) => {
+    if (Math.floor(idx / 7) === 0) {
+        createListElement(dateStr, dateList1);
+    }
+    else if (Math.floor(idx / 7) === 1) {
+        createListElement(dateStr, dateList2);
+    }
+    else if (Math.floor(idx / 7) === 2) {
+        createListElement(dateStr, dateList3);
+    }
+    else if (Math.floor(idx / 7) === 3) {
+        createListElement(dateStr, dateList4);
+    }
 });
