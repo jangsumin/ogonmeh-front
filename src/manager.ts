@@ -1,8 +1,8 @@
 interface Menu {
-  date?: String;
-  koreanFoodCorner: String[];
-  hotCorner: String[];
-  saladCorner: String[];
+  date?: string;
+  koreanFoodCorner: string[];
+  hotCorner: string[];
+  saladCorner: string[];
 }
 
 const form: HTMLFormElement | null = document.querySelector(".menu-input-form");
@@ -16,9 +16,9 @@ const updateButton: HTMLInputElement | null =
   document.querySelector(".update-button");
 let formData: FormData | null;
 
-const KOREAN_FOOD_MENU: String = "korean-food-menu";
-const HOT_MENU: String = "hot-menu";
-const SALAD_MENU: String = "salad-menu";
+const KOREAN_FOOD_MENU: string = "korean-food-menu";
+const HOT_MENU: string = "hot-menu";
+const SALAD_MENU: string = "salad-menu";
 
 // 처음 렌더링 시, 오늘의 날짜가 form에 나타나도록 설정
 if (NamespaceManager.dateText) {
