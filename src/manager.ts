@@ -74,7 +74,7 @@ updateButton?.addEventListener("click", () => {
     });
 });
 
-// 오늘로부터 28일동안의 날짜들을 렌더링
+// 이번주 월요일부터 28일동안의 날짜들을 렌더링
 function convertDateToString(date: Date): string {
   const month: number = date.getMonth() + 1;
   const day: number = date.getDate();
@@ -85,18 +85,19 @@ function convertDateToString(date: Date): string {
   return dateStr;
 }
 
-const datesInFourWeeks: string[] = [
-  convertDateToString(NamespaceManager.todayDate),
-];
+let startDate: Date = NamespaceManager.todayDate;
+startDate = new Date(
+  startDate.setDate(
+    startDate.getDate() -
+      (startDate.getDay() === 0 ? 6 : startDate.getDay() - 1)
+  )
+);
+
+console.log(startDate);
+const datesInFourWeeks: string[] = [convertDateToString(startDate)];
 for (let i = 0; i < 28 - 1; i++) {
   datesInFourWeeks.push(
-    convertDateToString(
-      new Date(
-        NamespaceManager.todayDate.setDate(
-          NamespaceManager.todayDate.getDate() + 1
-        )
-      )
-    )
+    convertDateToString(new Date(startDate.setDate(startDate.getDate() + 1)))
   );
 }
 

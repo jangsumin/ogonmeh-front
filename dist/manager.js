@@ -60,7 +60,7 @@ updateButton === null || updateButton === void 0 ? void 0 : updateButton.addEven
         console.error(error);
     });
 });
-// 오늘로부터 28일동안의 날짜들을 렌더링
+// 이번주 월요일부터 28일동안의 날짜들을 렌더링
 function convertDateToString(date) {
     const month = date.getMonth() + 1;
     const day = date.getDate();
@@ -70,11 +70,13 @@ function convertDateToString(date) {
     ].join(" / ");
     return dateStr;
 }
-const datesInFourWeeks = [
-    convertDateToString(NamespaceManager.todayDate),
-];
+let startDate = NamespaceManager.todayDate;
+startDate = new Date(startDate.setDate(startDate.getDate() -
+    (startDate.getDay() === 0 ? 6 : startDate.getDay() - 1)));
+console.log(startDate);
+const datesInFourWeeks = [convertDateToString(startDate)];
 for (let i = 0; i < 28 - 1; i++) {
-    datesInFourWeeks.push(convertDateToString(new Date(NamespaceManager.todayDate.setDate(NamespaceManager.todayDate.getDate() + 1))));
+    datesInFourWeeks.push(convertDateToString(new Date(startDate.setDate(startDate.getDate() + 1))));
 }
 const dateList1 = document.querySelector(".date-list1");
 const dateList2 = document.querySelector(".date-list2");
