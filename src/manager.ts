@@ -10,7 +10,7 @@ const form: HTMLFormElement | null = document.querySelector(".menu-input-form");
 namespace NamespaceManager {
   export const dateText: HTMLInputElement | null =
     document.querySelector(".date-text");
-  export const todayDate: Date = new Date();
+  export const todayDate: Date = new Date(2023, 5, 4);
 }
 const updateButton: HTMLInputElement | null =
   document.querySelector(".update-button");
@@ -85,7 +85,7 @@ function convertDateToString(date: Date): string {
   return dateStr;
 }
 
-const startDate = new Date();
+const startDate = new Date(2023, 5, 4);
 startDate.setDate(
   startDate.getDate() - (startDate.getDay() === 0 ? 6 : startDate.getDay() - 1)
 );
@@ -135,6 +135,40 @@ function createListElement(date: Date, idx: number): void {
   }
 }
 
+const koreanFoodCorner: HTMLInputElement | null = document.querySelector(
+  ".lower-wrap .korean-food-corner"
+);
+const hotCorner: HTMLInputElement | null = document.querySelector(
+  ".lower-wrap .hot-corner"
+);
+const saladCorner: HTMLInputElement | null = document.querySelector(
+  ".lower-wrap .salad-corner"
+);
+const koreanFoodCorner_inputElements: NodeListOf<HTMLInputElement> | undefined =
+  koreanFoodCorner?.querySelectorAll("input");
+const hotCorner_inputElements: NodeListOf<HTMLInputElement> | undefined =
+  hotCorner?.querySelectorAll("input");
+const saladCorner_inputElements: NodeListOf<HTMLInputElement> | undefined =
+  saladCorner?.querySelectorAll("input");
+
 datesInFourWeeks.map((date, idx) => {
   createListElement(date, idx);
 });
+
+if (
+  NamespaceManager.todayDate.getDay() === 0 ||
+  NamespaceManager.todayDate.getDay() === 6
+) {
+  if (updateButton) {
+    updateButton.style.display = "none";
+  }
+  koreanFoodCorner_inputElements?.forEach((input) => {
+    input.disabled = true;
+  });
+  hotCorner_inputElements?.forEach((input) => {
+    input.disabled = true;
+  });
+  saladCorner_inputElements?.forEach((input) => {
+    input.disabled = true;
+  });
+}

@@ -4,7 +4,7 @@ const form = document.querySelector(".menu-input-form");
 var NamespaceManager;
 (function (NamespaceManager) {
     NamespaceManager.dateText = document.querySelector(".date-text");
-    NamespaceManager.todayDate = new Date();
+    NamespaceManager.todayDate = new Date(2023, 5, 4);
 })(NamespaceManager || (NamespaceManager = {}));
 const updateButton = document.querySelector(".update-button");
 let formData;
@@ -70,7 +70,7 @@ function convertDateToString(date) {
     ].join(" / ");
     return dateStr;
 }
-const startDate = new Date();
+const startDate = new Date(2023, 5, 4);
 startDate.setDate(startDate.getDate() - (startDate.getDay() === 0 ? 6 : startDate.getDay() - 1));
 const datesInFourWeeks = [];
 for (let i = 0; i < 28; i++) {
@@ -106,6 +106,27 @@ function createListElement(date, idx) {
         dateList4 === null || dateList4 === void 0 ? void 0 : dateList4.appendChild(li);
     }
 }
+const koreanFoodCorner = document.querySelector(".lower-wrap .korean-food-corner");
+const hotCorner = document.querySelector(".lower-wrap .hot-corner");
+const saladCorner = document.querySelector(".lower-wrap .salad-corner");
+const koreanFoodCorner_inputElements = koreanFoodCorner === null || koreanFoodCorner === void 0 ? void 0 : koreanFoodCorner.querySelectorAll("input");
+const hotCorner_inputElements = hotCorner === null || hotCorner === void 0 ? void 0 : hotCorner.querySelectorAll("input");
+const saladCorner_inputElements = saladCorner === null || saladCorner === void 0 ? void 0 : saladCorner.querySelectorAll("input");
 datesInFourWeeks.map((date, idx) => {
     createListElement(date, idx);
 });
+if (NamespaceManager.todayDate.getDay() === 0 ||
+    NamespaceManager.todayDate.getDay() === 6) {
+    if (updateButton) {
+        updateButton.style.display = "none";
+    }
+    koreanFoodCorner_inputElements === null || koreanFoodCorner_inputElements === void 0 ? void 0 : koreanFoodCorner_inputElements.forEach((input) => {
+        input.disabled = true;
+    });
+    hotCorner_inputElements === null || hotCorner_inputElements === void 0 ? void 0 : hotCorner_inputElements.forEach((input) => {
+        input.disabled = true;
+    });
+    saladCorner_inputElements === null || saladCorner_inputElements === void 0 ? void 0 : saladCorner_inputElements.forEach((input) => {
+        input.disabled = true;
+    });
+}
