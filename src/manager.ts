@@ -85,19 +85,15 @@ function convertDateToString(date: Date): string {
   return dateStr;
 }
 
-let startDate: Date = NamespaceManager.todayDate;
-startDate = new Date(
-  startDate.setDate(
-    startDate.getDate() -
-      (startDate.getDay() === 0 ? 6 : startDate.getDay() - 1)
-  )
+const startDate = new Date();
+startDate.setDate(
+  startDate.getDate() - (startDate.getDay() === 0 ? 6 : startDate.getDay() - 1)
 );
 
-console.log(startDate);
-const datesInFourWeeks: string[] = [convertDateToString(startDate)];
-for (let i = 0; i < 28 - 1; i++) {
+const datesInFourWeeks: Date[] = [];
+for (let i = 0; i < 28; i++) {
   datesInFourWeeks.push(
-    convertDateToString(new Date(startDate.setDate(startDate.getDate() + 1)))
+    new Date(startDate.setDate(startDate.getDate() + (i === 0 ? 0 : 1)))
   );
 }
 
@@ -110,13 +106,20 @@ const dateList3: HTMLInputElement | null =
 const dateList4: HTMLInputElement | null =
   document.querySelector(".date-list4");
 
-function createListElement(text: string, idx: number): void {
+function createListElement(date: Date, idx: number): void {
   const li: HTMLLIElement = document.createElement("li");
-  li.textContent = text;
+  li.textContent = convertDateToString(date);
+  if (
+    date.getMonth() <= NamespaceManager.todayDate.getMonth() &&
+    date.getDate() < NamespaceManager.todayDate.getDate()
+  ) {
+    li.style.cursor = "auto";
+    li.style.opacity = "0.33";
+  }
   if (idx % 7 === 5 || idx % 7 === 6) {
     li.style.cursor = "auto";
     li.style.color = "#e66060";
-    li.style.opacity = "0.5";
+    li.style.opacity = "0.33";
   }
   if (Math.floor(idx / 7) === 0) {
     dateList1?.appendChild(li);
@@ -132,6 +135,6 @@ function createListElement(text: string, idx: number): void {
   }
 }
 
-datesInFourWeeks.map((dateStr, idx) => {
-  createListElement(dateStr, idx);
+datesInFourWeeks.map((date, idx) => {
+  createListElement(date, idx);
 });

@@ -70,25 +70,28 @@ function convertDateToString(date) {
     ].join(" / ");
     return dateStr;
 }
-let startDate = NamespaceManager.todayDate;
-startDate = new Date(startDate.setDate(startDate.getDate() -
-    (startDate.getDay() === 0 ? 6 : startDate.getDay() - 1)));
-console.log(startDate);
-const datesInFourWeeks = [convertDateToString(startDate)];
-for (let i = 0; i < 28 - 1; i++) {
-    datesInFourWeeks.push(convertDateToString(new Date(startDate.setDate(startDate.getDate() + 1))));
+const startDate = new Date();
+startDate.setDate(startDate.getDate() - (startDate.getDay() === 0 ? 6 : startDate.getDay() - 1));
+const datesInFourWeeks = [];
+for (let i = 0; i < 28; i++) {
+    datesInFourWeeks.push(new Date(startDate.setDate(startDate.getDate() + (i === 0 ? 0 : 1))));
 }
 const dateList1 = document.querySelector(".date-list1");
 const dateList2 = document.querySelector(".date-list2");
 const dateList3 = document.querySelector(".date-list3");
 const dateList4 = document.querySelector(".date-list4");
-function createListElement(text, idx) {
+function createListElement(date, idx) {
     const li = document.createElement("li");
-    li.textContent = text;
+    li.textContent = convertDateToString(date);
+    if (date.getMonth() <= NamespaceManager.todayDate.getMonth() &&
+        date.getDate() < NamespaceManager.todayDate.getDate()) {
+        li.style.cursor = "auto";
+        li.style.opacity = "0.33";
+    }
     if (idx % 7 === 5 || idx % 7 === 6) {
         li.style.cursor = "auto";
         li.style.color = "#e66060";
-        li.style.opacity = "0.5";
+        li.style.opacity = "0.33";
     }
     if (Math.floor(idx / 7) === 0) {
         dateList1 === null || dateList1 === void 0 ? void 0 : dateList1.appendChild(li);
@@ -103,6 +106,6 @@ function createListElement(text, idx) {
         dateList4 === null || dateList4 === void 0 ? void 0 : dateList4.appendChild(li);
     }
 }
-datesInFourWeeks.map((dateStr, idx) => {
-    createListElement(dateStr, idx);
+datesInFourWeeks.map((date, idx) => {
+    createListElement(date, idx);
 });
