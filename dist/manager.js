@@ -82,22 +82,27 @@ const dateList1 = document.querySelector(".date-list1");
 const dateList2 = document.querySelector(".date-list2");
 const dateList3 = document.querySelector(".date-list3");
 const dateList4 = document.querySelector(".date-list4");
-function createListElement(text, dateList) {
+function createListElement(text, idx) {
     const li = document.createElement("li");
     li.textContent = text;
-    dateList === null || dateList === void 0 ? void 0 : dateList.appendChild(li);
+    if (idx % 7 === 5 || idx % 7 === 6) {
+        li.style.cursor = "auto";
+        li.style.color = "#e66060";
+        li.style.opacity = "0.5";
+    }
+    if (Math.floor(idx / 7) === 0) {
+        dateList1 === null || dateList1 === void 0 ? void 0 : dateList1.appendChild(li);
+    }
+    if (Math.floor(idx / 7) === 1) {
+        dateList2 === null || dateList2 === void 0 ? void 0 : dateList2.appendChild(li);
+    }
+    if (Math.floor(idx / 7) === 2) {
+        dateList3 === null || dateList3 === void 0 ? void 0 : dateList3.appendChild(li);
+    }
+    if (Math.floor(idx / 7) === 3) {
+        dateList4 === null || dateList4 === void 0 ? void 0 : dateList4.appendChild(li);
+    }
 }
 datesInFourWeeks.map((dateStr, idx) => {
-    if (Math.floor(idx / 7) === 0) {
-        createListElement(dateStr, dateList1);
-    }
-    else if (Math.floor(idx / 7) === 1) {
-        createListElement(dateStr, dateList2);
-    }
-    else if (Math.floor(idx / 7) === 2) {
-        createListElement(dateStr, dateList3);
-    }
-    else if (Math.floor(idx / 7) === 3) {
-        createListElement(dateStr, dateList4);
-    }
+    createListElement(dateStr, idx);
 });

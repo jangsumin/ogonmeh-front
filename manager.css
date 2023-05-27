@@ -82,9 +82,9 @@ body {
   text-align: center;
 }
 
-.date-list-wrap ul :not(li:last-child) {
+/* .date-list-wrap ul :not(li:last-child) {
   border-bottom: 1px solid var(--main-nav-color);
-}
+} */
 
 .view-section {
   display: grid;

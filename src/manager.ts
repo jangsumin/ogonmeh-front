@@ -110,23 +110,28 @@ const dateList3: HTMLInputElement | null =
 const dateList4: HTMLInputElement | null =
   document.querySelector(".date-list4");
 
-function createListElement(
-  text: string,
-  dateList: HTMLInputElement | null
-): void {
+function createListElement(text: string, idx: number): void {
   const li: HTMLLIElement = document.createElement("li");
   li.textContent = text;
-  dateList?.appendChild(li);
+  if (idx % 7 === 5 || idx % 7 === 6) {
+    li.style.cursor = "auto";
+    li.style.color = "#e66060";
+    li.style.opacity = "0.5";
+  }
+  if (Math.floor(idx / 7) === 0) {
+    dateList1?.appendChild(li);
+  }
+  if (Math.floor(idx / 7) === 1) {
+    dateList2?.appendChild(li);
+  }
+  if (Math.floor(idx / 7) === 2) {
+    dateList3?.appendChild(li);
+  }
+  if (Math.floor(idx / 7) === 3) {
+    dateList4?.appendChild(li);
+  }
 }
 
 datesInFourWeeks.map((dateStr, idx) => {
-  if (Math.floor(idx / 7) === 0) {
-    createListElement(dateStr, dateList1);
-  } else if (Math.floor(idx / 7) === 1) {
-    createListElement(dateStr, dateList2);
-  } else if (Math.floor(idx / 7) === 2) {
-    createListElement(dateStr, dateList3);
-  } else if (Math.floor(idx / 7) === 3) {
-    createListElement(dateStr, dateList4);
-  }
+  createListElement(dateStr, idx);
 });
