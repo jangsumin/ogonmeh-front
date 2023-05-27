@@ -83,8 +83,11 @@ const dateList4 = document.querySelector(".date-list4");
 function createListElement(date, idx) {
     const li = document.createElement("li");
     li.textContent = convertDateToString(date);
-    if (date.getMonth() <= NamespaceManager.todayDate.getMonth() &&
-        date.getDate() < NamespaceManager.todayDate.getDate()) {
+    if (date.getMonth() < NamespaceManager.todayDate.getMonth()
+        ? true
+        : date.getDate() < NamespaceManager.todayDate.getDate()
+            ? true
+            : false) {
         li.style.cursor = "auto";
         li.style.opacity = "0.33";
     }

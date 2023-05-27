@@ -110,8 +110,11 @@ function createListElement(date: Date, idx: number): void {
   const li: HTMLLIElement = document.createElement("li");
   li.textContent = convertDateToString(date);
   if (
-    date.getMonth() <= NamespaceManager.todayDate.getMonth() &&
-    date.getDate() < NamespaceManager.todayDate.getDate()
+    date.getMonth() < NamespaceManager.todayDate.getMonth()
+      ? true
+      : date.getDate() < NamespaceManager.todayDate.getDate()
+      ? true
+      : false
   ) {
     li.style.cursor = "auto";
     li.style.opacity = "0.33";
