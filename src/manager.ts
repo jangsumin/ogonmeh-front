@@ -10,7 +10,7 @@ const form: HTMLFormElement | null = document.querySelector(".menu-input-form");
 namespace NamespaceManager {
   export const dateText: HTMLInputElement | null =
     document.querySelector(".date-text");
-  export const todayDate: Date = new Date(2023, 5, 4);
+  export const todayDate: Date = new Date(2023, 5, 1);
 }
 const updateButton: HTMLInputElement | null =
   document.querySelector(".update-button");
@@ -85,7 +85,7 @@ function convertDateToString(date: Date): string {
   return dateStr;
 }
 
-const startDate = new Date(2023, 5, 4);
+const startDate = new Date(2023, 5, 1);
 startDate.setDate(
   startDate.getDate() - (startDate.getDay() === 0 ? 6 : startDate.getDay() - 1)
 );
@@ -106,16 +106,35 @@ const dateList3: HTMLInputElement | null =
 const dateList4: HTMLInputElement | null =
   document.querySelector(".date-list4");
 
+function compareDates(date1: Date, date2: Date): boolean {
+  let isDate1SmallerThanDate2: boolean;
+  if (
+    date1.getMonth() < date2.getMonth()
+      ? true
+      : date1.getMonth() === date2.getMonth()
+      ? date1.getDate() < date2.getDate()
+        ? true
+        : false
+      : false
+  ) {
+    isDate1SmallerThanDate2 = true;
+  } else {
+    isDate1SmallerThanDate2 = false;
+  }
+  return isDate1SmallerThanDate2;
+}
+
 function createListElement(date: Date, idx: number): void {
   const li: HTMLLIElement = document.createElement("li");
   li.textContent = convertDateToString(date);
-  if (
-    date.getMonth() < NamespaceManager.todayDate.getMonth()
-      ? true
-      : date.getDate() < NamespaceManager.todayDate.getDate()
-      ? true
-      : false
-  ) {
+
+  // if (
+  //   !(date.getDay() === 0 || date.getDay() === 6) &&
+  //   !compareDates(date, NamespaceManager.todayDate)
+  // ) {
+  // }
+
+  if (compareDates(date, NamespaceManager.todayDate)) {
     li.style.cursor = "auto";
     li.style.opacity = "0.33";
   }
