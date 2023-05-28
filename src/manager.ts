@@ -128,11 +128,19 @@ function createListElement(date: Date, idx: number): void {
   const li: HTMLLIElement = document.createElement("li");
   li.textContent = convertDateToString(date);
 
-  // if (
-  //   !(date.getDay() === 0 || date.getDay() === 6) &&
-  //   !compareDates(date, NamespaceManager.todayDate)
-  // ) {
-  // }
+  if (
+    !(date.getDay() === 0 || date.getDay() === 6) &&
+    !compareDates(date, NamespaceManager.todayDate)
+  ) {
+    li.addEventListener("click", () => {
+      if (NamespaceManager.dateText) {
+        NamespaceManager.dateText.textContent = [
+          String(NamespaceManager.todayDate.getFullYear()).slice(-2),
+          li.textContent,
+        ].join(" / ");
+      }
+    });
+  }
 
   if (compareDates(date, NamespaceManager.todayDate)) {
     li.style.cursor = "auto";
