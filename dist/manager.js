@@ -4,7 +4,7 @@ const form = document.querySelector(".menu-input-form");
 var NamespaceManager;
 (function (NamespaceManager) {
     NamespaceManager.dateText = document.querySelector(".date-text");
-    NamespaceManager.todayDate = new Date(2023, 5, 1);
+    NamespaceManager.todayDate = new Date();
 })(NamespaceManager || (NamespaceManager = {}));
 const updateButton = document.querySelector(".update-button");
 let formData;
@@ -12,11 +12,13 @@ const KOREAN_FOOD_MENU = "korean-food-menu";
 const HOT_MENU = "hot-menu";
 const SALAD_MENU = "salad-menu";
 // 처음 렌더링 시, 오늘의 날짜가 form에 나타나도록 설정
+let currentTargetDate = "";
 if (NamespaceManager.dateText) {
     NamespaceManager.dateText.textContent = [
         String(NamespaceManager.todayDate.getFullYear()).slice(-2),
         convertDateToString(NamespaceManager.todayDate),
     ].join(" / ");
+    currentTargetDate = NamespaceManager.dateText.textContent;
 }
 updateButton === null || updateButton === void 0 ? void 0 : updateButton.addEventListener("click", () => {
     var _a, _b, _c, _d;
@@ -70,7 +72,7 @@ function convertDateToString(date) {
     ].join(" / ");
     return dateStr;
 }
-const startDate = new Date(2023, 5, 1);
+const startDate = new Date();
 startDate.setDate(startDate.getDate() - (startDate.getDay() === 0 ? 6 : startDate.getDay() - 1));
 const datesInFourWeeks = [];
 for (let i = 0; i < 28; i++) {
@@ -107,6 +109,7 @@ function createListElement(date, idx) {
                     String(NamespaceManager.todayDate.getFullYear()).slice(-2),
                     li.textContent,
                 ].join(" / ");
+                currentTargetDate = NamespaceManager.dateText.textContent;
             }
         });
     }
@@ -132,12 +135,12 @@ function createListElement(date, idx) {
         dateList4 === null || dateList4 === void 0 ? void 0 : dateList4.appendChild(li);
     }
 }
-const koreanFoodCorner = document.querySelector(".lower-wrap .korean-food-corner");
-const hotCorner = document.querySelector(".lower-wrap .hot-corner");
-const saladCorner = document.querySelector(".lower-wrap .salad-corner");
-const koreanFoodCorner_inputElements = koreanFoodCorner === null || koreanFoodCorner === void 0 ? void 0 : koreanFoodCorner.querySelectorAll("input");
-const hotCorner_inputElements = hotCorner === null || hotCorner === void 0 ? void 0 : hotCorner.querySelectorAll("input");
-const saladCorner_inputElements = saladCorner === null || saladCorner === void 0 ? void 0 : saladCorner.querySelectorAll("input");
+const koreanFoodCornerInput = document.querySelector(".lower-wrap .korean-food-corner");
+const hotCornerInput = document.querySelector(".lower-wrap .hot-corner");
+const saladCornerInput = document.querySelector(".lower-wrap .salad-corner");
+const koreanFoodCorner_inputElements = koreanFoodCornerInput === null || koreanFoodCornerInput === void 0 ? void 0 : koreanFoodCornerInput.querySelectorAll("input");
+const hotCorner_inputElements = hotCornerInput === null || hotCornerInput === void 0 ? void 0 : hotCornerInput.querySelectorAll("input");
+const saladCorner_inputElements = saladCornerInput === null || saladCornerInput === void 0 ? void 0 : saladCornerInput.querySelectorAll("input");
 datesInFourWeeks.map((date, idx) => {
     createListElement(date, idx);
 });
@@ -156,3 +159,26 @@ if (NamespaceManager.todayDate.getDay() === 0 ||
         input.disabled = true;
     });
 }
+// 데이터 GET 요청
+const koreanFoodCornerView = document.querySelector(".view-section .korean-food-corner");
+const hotCornerView = document.querySelector(".view-section .hot-corner");
+const saladCornerView = document.querySelector(".view-section .salad-corner");
+const koreanFoodCorner_divElements = koreanFoodCornerView === null || koreanFoodCornerView === void 0 ? void 0 : koreanFoodCornerView.querySelectorAll("div");
+const hotCorner_divElements = hotCornerView === null || hotCornerView === void 0 ? void 0 : hotCornerView.querySelectorAll("div");
+const saladCorner_divElements = saladCornerView === null || saladCornerView === void 0 ? void 0 : saladCornerView.querySelectorAll("div");
+const getURL = "http://localhost:4000/get" + `/${currentTargetDate.replace(/\s\/\s/g, "")}`;
+let menuData;
+fetch(getURL)
+    .then((response) => {
+    if (!response.ok) {
+        throw new Error("데이터 가져오기 실패");
+    }
+    return response.json();
+})
+    .then((data) => {
+    menuData = data; // 응답 데이터를 변수에 저장
+    console.log(menuData); // 저장된 데이터 처리
+})
+    .catch((error) => {
+    console.error("오류:", error);
+});

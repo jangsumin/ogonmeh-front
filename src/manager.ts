@@ -10,7 +10,7 @@ const form: HTMLFormElement | null = document.querySelector(".menu-input-form");
 namespace NamespaceManager {
   export const dateText: HTMLInputElement | null =
     document.querySelector(".date-text");
-  export const todayDate: Date = new Date(2023, 5, 1);
+  export const todayDate: Date = new Date();
 }
 const updateButton: HTMLInputElement | null =
   document.querySelector(".update-button");
@@ -21,11 +21,14 @@ const HOT_MENU: string = "hot-menu";
 const SALAD_MENU: string = "salad-menu";
 
 // 처음 렌더링 시, 오늘의 날짜가 form에 나타나도록 설정
+let currentTargetDate = "";
+
 if (NamespaceManager.dateText) {
   NamespaceManager.dateText.textContent = [
     String(NamespaceManager.todayDate.getFullYear()).slice(-2),
     convertDateToString(NamespaceManager.todayDate),
   ].join(" / ");
+  currentTargetDate = NamespaceManager.dateText.textContent;
 }
 
 updateButton?.addEventListener("click", () => {
@@ -85,7 +88,7 @@ function convertDateToString(date: Date): string {
   return dateStr;
 }
 
-const startDate = new Date(2023, 5, 1);
+const startDate = new Date();
 startDate.setDate(
   startDate.getDate() - (startDate.getDay() === 0 ? 6 : startDate.getDay() - 1)
 );
@@ -138,6 +141,7 @@ function createListElement(date: Date, idx: number): void {
           String(NamespaceManager.todayDate.getFullYear()).slice(-2),
           li.textContent,
         ].join(" / ");
+        currentTargetDate = NamespaceManager.dateText.textContent;
       }
     });
   }
@@ -165,21 +169,21 @@ function createListElement(date: Date, idx: number): void {
   }
 }
 
-const koreanFoodCorner: HTMLInputElement | null = document.querySelector(
+const koreanFoodCornerInput: HTMLInputElement | null = document.querySelector(
   ".lower-wrap .korean-food-corner"
 );
-const hotCorner: HTMLInputElement | null = document.querySelector(
+const hotCornerInput: HTMLInputElement | null = document.querySelector(
   ".lower-wrap .hot-corner"
 );
-const saladCorner: HTMLInputElement | null = document.querySelector(
+const saladCornerInput: HTMLInputElement | null = document.querySelector(
   ".lower-wrap .salad-corner"
 );
 const koreanFoodCorner_inputElements: NodeListOf<HTMLInputElement> | undefined =
-  koreanFoodCorner?.querySelectorAll("input");
+  koreanFoodCornerInput?.querySelectorAll("input");
 const hotCorner_inputElements: NodeListOf<HTMLInputElement> | undefined =
-  hotCorner?.querySelectorAll("input");
+  hotCornerInput?.querySelectorAll("input");
 const saladCorner_inputElements: NodeListOf<HTMLInputElement> | undefined =
-  saladCorner?.querySelectorAll("input");
+  saladCornerInput?.querySelectorAll("input");
 
 datesInFourWeeks.map((date, idx) => {
   createListElement(date, idx);
@@ -202,3 +206,39 @@ if (
     input.disabled = true;
   });
 }
+
+// 데이터 GET 요청
+const koreanFoodCornerView: HTMLInputElement | null = document.querySelector(
+  ".view-section .korean-food-corner"
+);
+const hotCornerView: HTMLInputElement | null = document.querySelector(
+  ".view-section .hot-corner"
+);
+const saladCornerView: HTMLInputElement | null = document.querySelector(
+  ".view-section .salad-corner"
+);
+
+const koreanFoodCorner_divElements: NodeListOf<HTMLDivElement> | undefined =
+  koreanFoodCornerView?.querySelectorAll("div");
+const hotCorner_divElements: NodeListOf<HTMLDivElement> | undefined =
+  hotCornerView?.querySelectorAll("div");
+const saladCorner_divElements: NodeListOf<HTMLDivElement> | undefined =
+  saladCornerView?.querySelectorAll("div");
+
+const getURL: string =
+  "http://localhost:4000/get" + `/${currentTargetDate.replace(/\s\/\s/g, "")}`;
+let menuData: Menu;
+fetch(getURL)
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("데이터 가져오기 실패");
+    }
+    return response.json();
+  })
+  .then((data) => {
+    menuData = data; // 응답 데이터를 변수에 저장
+    console.log(menuData); // 저장된 데이터 처리
+  })
+  .catch((error) => {
+    console.error("오류:", error);
+  });
