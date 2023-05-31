@@ -110,6 +110,17 @@ function createListElement(date, idx) {
                     li.textContent,
                 ].join(" / ");
                 currentTargetDate = NamespaceManager.dateText.textContent;
+                getMenuData(currentTargetDate).then(() => {
+                    koreanFoodCorner_divElements === null || koreanFoodCorner_divElements === void 0 ? void 0 : koreanFoodCorner_divElements.forEach((div, idx) => {
+                        div.textContent = menuData[0].koreanFoodCorner[idx];
+                    });
+                    hotCorner_divElements === null || hotCorner_divElements === void 0 ? void 0 : hotCorner_divElements.forEach((div, idx) => {
+                        div.textContent = menuData[0].hotCorner[idx];
+                    });
+                    saladCorner_divElements === null || saladCorner_divElements === void 0 ? void 0 : saladCorner_divElements.forEach((div, idx) => {
+                        div.textContent = menuData[0].saladCorner[idx];
+                    });
+                });
             }
         });
     }
@@ -166,9 +177,10 @@ const saladCornerView = document.querySelector(".view-section .salad-corner");
 const koreanFoodCorner_divElements = koreanFoodCornerView === null || koreanFoodCornerView === void 0 ? void 0 : koreanFoodCornerView.querySelectorAll("div");
 const hotCorner_divElements = hotCornerView === null || hotCornerView === void 0 ? void 0 : hotCornerView.querySelectorAll("div");
 const saladCorner_divElements = saladCornerView === null || saladCornerView === void 0 ? void 0 : saladCornerView.querySelectorAll("div");
-const getURL = "http://localhost:4000/get" + `/${currentTargetDate.replace(/\s\/\s/g, "")}`;
 let menuData;
-const getMenuData = () => {
+const getMenuData = (currentTargetDate) => {
+    const getURL = "http://localhost:4000/get" +
+        `/${currentTargetDate.replace(/\s\/\s/g, "")}`;
     return fetch(getURL)
         .then((response) => {
         if (!response.ok) {
@@ -184,7 +196,7 @@ const getMenuData = () => {
         console.error("오류:", error);
     });
 };
-getMenuData().then(() => {
+getMenuData(currentTargetDate).then(() => {
     koreanFoodCorner_divElements === null || koreanFoodCorner_divElements === void 0 ? void 0 : koreanFoodCorner_divElements.forEach((div, idx) => {
         div.textContent = menuData[0].koreanFoodCorner[idx];
     });

@@ -142,6 +142,17 @@ function createListElement(date: Date, idx: number): void {
           li.textContent,
         ].join(" / ");
         currentTargetDate = NamespaceManager.dateText.textContent;
+        getMenuData(currentTargetDate).then(() => {
+          koreanFoodCorner_divElements?.forEach((div, idx) => {
+            div.textContent = menuData[0].koreanFoodCorner[idx];
+          });
+          hotCorner_divElements?.forEach((div, idx) => {
+            div.textContent = menuData[0].hotCorner[idx];
+          });
+          saladCorner_divElements?.forEach((div, idx) => {
+            div.textContent = menuData[0].saladCorner[idx];
+          });
+        });
       }
     });
   }
@@ -225,10 +236,11 @@ const hotCorner_divElements: NodeListOf<HTMLDivElement> | undefined =
 const saladCorner_divElements: NodeListOf<HTMLDivElement> | undefined =
   saladCornerView?.querySelectorAll("div");
 
-const getURL: string =
-  "http://localhost:4000/get" + `/${currentTargetDate.replace(/\s\/\s/g, "")}`;
 let menuData: Array<Menu>;
-const getMenuData = () => {
+const getMenuData = (currentTargetDate: string) => {
+  const getURL: string =
+    "http://localhost:4000/get" +
+    `/${currentTargetDate.replace(/\s\/\s/g, "")}`;
   return fetch(getURL)
     .then((response) => {
       if (!response.ok) {
@@ -244,7 +256,7 @@ const getMenuData = () => {
       console.error("오류:", error);
     });
 };
-getMenuData().then(() => {
+getMenuData(currentTargetDate).then(() => {
   koreanFoodCorner_divElements?.forEach((div, idx) => {
     div.textContent = menuData[0].koreanFoodCorner[idx];
   });
