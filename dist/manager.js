@@ -168,17 +168,30 @@ const hotCorner_divElements = hotCornerView === null || hotCornerView === void 0
 const saladCorner_divElements = saladCornerView === null || saladCornerView === void 0 ? void 0 : saladCornerView.querySelectorAll("div");
 const getURL = "http://localhost:4000/get" + `/${currentTargetDate.replace(/\s\/\s/g, "")}`;
 let menuData;
-fetch(getURL)
-    .then((response) => {
-    if (!response.ok) {
-        throw new Error("데이터 가져오기 실패");
-    }
-    return response.json();
-})
-    .then((data) => {
-    menuData = data; // 응답 데이터를 변수에 저장
-    console.log(menuData); // 저장된 데이터 처리
-})
-    .catch((error) => {
-    console.error("오류:", error);
+const getMenuData = () => {
+    return fetch(getURL)
+        .then((response) => {
+        if (!response.ok) {
+            throw new Error("데이터 가져오기 실패");
+        }
+        return response.json();
+    })
+        .then((data) => {
+        menuData = data; // 응답 데이터를 변수에 저장
+        console.log(menuData); // 저장된 데이터 처리
+    })
+        .catch((error) => {
+        console.error("오류:", error);
+    });
+};
+getMenuData().then(() => {
+    koreanFoodCorner_divElements === null || koreanFoodCorner_divElements === void 0 ? void 0 : koreanFoodCorner_divElements.forEach((div, idx) => {
+        div.textContent = menuData[0].koreanFoodCorner[idx];
+    });
+    hotCorner_divElements === null || hotCorner_divElements === void 0 ? void 0 : hotCorner_divElements.forEach((div, idx) => {
+        div.textContent = menuData[0].hotCorner[idx];
+    });
+    saladCorner_divElements === null || saladCorner_divElements === void 0 ? void 0 : saladCorner_divElements.forEach((div, idx) => {
+        div.textContent = menuData[0].saladCorner[idx];
+    });
 });

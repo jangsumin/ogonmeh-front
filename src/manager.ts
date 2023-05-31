@@ -227,18 +227,31 @@ const saladCorner_divElements: NodeListOf<HTMLDivElement> | undefined =
 
 const getURL: string =
   "http://localhost:4000/get" + `/${currentTargetDate.replace(/\s\/\s/g, "")}`;
-let menuData: Menu;
-fetch(getURL)
-  .then((response) => {
-    if (!response.ok) {
-      throw new Error("데이터 가져오기 실패");
-    }
-    return response.json();
-  })
-  .then((data) => {
-    menuData = data; // 응답 데이터를 변수에 저장
-    console.log(menuData); // 저장된 데이터 처리
-  })
-  .catch((error) => {
-    console.error("오류:", error);
+let menuData: Array<Menu>;
+const getMenuData = () => {
+  return fetch(getURL)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("데이터 가져오기 실패");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      menuData = data; // 응답 데이터를 변수에 저장
+      console.log(menuData); // 저장된 데이터 처리
+    })
+    .catch((error) => {
+      console.error("오류:", error);
+    });
+};
+getMenuData().then(() => {
+  koreanFoodCorner_divElements?.forEach((div, idx) => {
+    div.textContent = menuData[0].koreanFoodCorner[idx];
   });
+  hotCorner_divElements?.forEach((div, idx) => {
+    div.textContent = menuData[0].hotCorner[idx];
+  });
+  saladCorner_divElements?.forEach((div, idx) => {
+    div.textContent = menuData[0].saladCorner[idx];
+  });
+});
