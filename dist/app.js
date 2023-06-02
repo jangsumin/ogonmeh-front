@@ -1,4 +1,8 @@
 "use strict";
+var NamespaceUser;
+(function (NamespaceUser) {
+    NamespaceUser.targetDate = "";
+})(NamespaceUser || (NamespaceUser = {}));
 function executeDropdown() {
     const dropdown = document.querySelector(".dropdown");
     const hamburgerButton = document.querySelector(".hamburger-button");
@@ -33,8 +37,6 @@ function executeLoginModal() {
     });
 }
 executeLoginModal();
-let currentTargetDate1 = "";
-// 날짜 이동 구현
 const dateText = document.querySelector(".date-text");
 const yesterdayMenuButton = document.querySelector(".yesterday-menu-button");
 const tomorrowMenuButton = document.querySelector(".tomorrow-menu-button");
@@ -42,17 +44,6 @@ let todayDate = new Date();
 let todayYear = String(todayDate.getFullYear());
 let todayMonth = String(todayDate.getMonth() + 1);
 let todayDay = String(todayDate.getDate());
-if (dateText) {
-    dateText.innerText =
-        todayYear +
-            "." +
-            todayMonth.padStart(2, "0") +
-            "." +
-            todayDay.padStart(2, "0");
-}
-if (yesterdayMenuButton) {
-    yesterdayMenuButton.style.visibility = "hidden";
-}
 function isSameDate(date1, date2) {
     if (date1.getFullYear() !== date2.getFullYear()) {
         return false;
@@ -65,11 +56,7 @@ function isSameDate(date1, date2) {
     }
     return true;
 }
-yesterdayMenuButton === null || yesterdayMenuButton === void 0 ? void 0 : yesterdayMenuButton.addEventListener("click", () => {
-    todayDate = new Date(todayDate.setDate(todayDate.getDate() - 1));
-    todayYear = String(todayDate.getFullYear());
-    todayMonth = String(todayDate.getMonth() + 1);
-    todayDay = String(todayDate.getDate());
+function renderTodayMenu() {
     if (dateText) {
         dateText.innerText =
             todayYear +
@@ -79,80 +66,71 @@ yesterdayMenuButton === null || yesterdayMenuButton === void 0 ? void 0 : yester
                 todayDay.padStart(2, "0");
     }
     if (yesterdayMenuButton) {
-        if (!isSameDate(todayDate, new Date())) {
-            yesterdayMenuButton.style.visibility = "visible";
-        }
-        else {
-            yesterdayMenuButton.style.visibility = "hidden";
-        }
+        yesterdayMenuButton.style.visibility = "hidden";
     }
-    currentTargetDate1 =
-        todayYear.slice(-2) +
-            todayMonth.padStart(2, "0") +
-            todayDay.padStart(2, "0");
-    getMenuData1(currentTargetDate1).then(() => {
-        koreanFoodCornerSection_divElements === null || koreanFoodCornerSection_divElements === void 0 ? void 0 : koreanFoodCornerSection_divElements.forEach((div, idx) => {
-            div.textContent = menuData1[0].koreanFoodCorner[idx];
-        });
-        hotCornerSection_divElements === null || hotCornerSection_divElements === void 0 ? void 0 : hotCornerSection_divElements.forEach((div, idx) => {
-            div.textContent = menuData1[0].hotCorner[idx];
-        });
-        saladCornerSection_divElements === null || saladCornerSection_divElements === void 0 ? void 0 : saladCornerSection_divElements.forEach((div, idx) => {
-            div.textContent = menuData1[0].saladCorner[idx];
-        });
+    renderMenu();
+}
+renderTodayMenu();
+function renderYesterdayMenu() {
+    yesterdayMenuButton === null || yesterdayMenuButton === void 0 ? void 0 : yesterdayMenuButton.addEventListener("click", () => {
+        todayDate = new Date(todayDate.setDate(todayDate.getDate() - 1));
+        todayYear = String(todayDate.getFullYear());
+        todayMonth = String(todayDate.getMonth() + 1);
+        todayDay = String(todayDate.getDate());
+        if (dateText) {
+            dateText.innerText =
+                todayYear +
+                    "." +
+                    todayMonth.padStart(2, "0") +
+                    "." +
+                    todayDay.padStart(2, "0");
+        }
+        if (yesterdayMenuButton) {
+            if (!isSameDate(todayDate, new Date())) {
+                yesterdayMenuButton.style.visibility = "visible";
+            }
+            else {
+                yesterdayMenuButton.style.visibility = "hidden";
+            }
+        }
+        renderMenu();
     });
-});
-tomorrowMenuButton === null || tomorrowMenuButton === void 0 ? void 0 : tomorrowMenuButton.addEventListener("click", () => {
-    todayDate = new Date(todayDate.setDate(todayDate.getDate() + 1));
-    todayYear = String(todayDate.getFullYear());
-    todayMonth = String(todayDate.getMonth() + 1);
-    todayDay = String(todayDate.getDate());
-    if (dateText) {
-        dateText.innerText =
-            todayYear +
-                "." +
-                todayMonth.padStart(2, "0") +
-                "." +
-                todayDay.padStart(2, "0");
-    }
-    if (yesterdayMenuButton) {
-        if (!isSameDate(todayDate, new Date())) {
-            yesterdayMenuButton.style.visibility = "visible";
+}
+renderYesterdayMenu();
+function renderTomorrowMenu() {
+    tomorrowMenuButton === null || tomorrowMenuButton === void 0 ? void 0 : tomorrowMenuButton.addEventListener("click", () => {
+        todayDate = new Date(todayDate.setDate(todayDate.getDate() + 1));
+        todayYear = String(todayDate.getFullYear());
+        todayMonth = String(todayDate.getMonth() + 1);
+        todayDay = String(todayDate.getDate());
+        if (dateText) {
+            dateText.innerText =
+                todayYear +
+                    "." +
+                    todayMonth.padStart(2, "0") +
+                    "." +
+                    todayDay.padStart(2, "0");
         }
-        else {
-            yesterdayMenuButton.style.visibility = "hidden";
+        if (yesterdayMenuButton) {
+            if (!isSameDate(todayDate, new Date())) {
+                yesterdayMenuButton.style.visibility = "visible";
+            }
+            else {
+                yesterdayMenuButton.style.visibility = "hidden";
+            }
         }
-    }
-    currentTargetDate1 =
-        todayYear.slice(-2) +
-            todayMonth.padStart(2, "0") +
-            todayDay.padStart(2, "0");
-    getMenuData1(currentTargetDate1).then(() => {
-        koreanFoodCornerSection_divElements === null || koreanFoodCornerSection_divElements === void 0 ? void 0 : koreanFoodCornerSection_divElements.forEach((div, idx) => {
-            div.textContent = menuData1[0].koreanFoodCorner[idx];
-        });
-        hotCornerSection_divElements === null || hotCornerSection_divElements === void 0 ? void 0 : hotCornerSection_divElements.forEach((div, idx) => {
-            div.textContent = menuData1[0].hotCorner[idx];
-        });
-        saladCornerSection_divElements === null || saladCornerSection_divElements === void 0 ? void 0 : saladCornerSection_divElements.forEach((div, idx) => {
-            div.textContent = menuData1[0].saladCorner[idx];
-        });
+        renderMenu();
     });
-});
-// 데이터 GET 요청
+}
+renderTomorrowMenu();
 const koreanFoodCornerSection = document.querySelector("main .korean-food-corner");
 const hotCornerSection = document.querySelector("main .hot-corner");
 const saladCornerSection = document.querySelector("main .salad-corner");
 const koreanFoodCornerSection_divElements = koreanFoodCornerSection === null || koreanFoodCornerSection === void 0 ? void 0 : koreanFoodCornerSection.querySelectorAll("div");
 const hotCornerSection_divElements = hotCornerSection === null || hotCornerSection === void 0 ? void 0 : hotCornerSection.querySelectorAll("div");
 const saladCornerSection_divElements = saladCornerSection === null || saladCornerSection === void 0 ? void 0 : saladCornerSection.querySelectorAll("div");
-currentTargetDate1 =
-    todayYear.slice(-2) + todayMonth.padStart(2, "0") + todayDay.padStart(2, "0");
-console.log(currentTargetDate1);
-let menuData1;
-const getMenuData1 = (currentTargetDate) => {
-    const getURL = "http://localhost:4000/get" +
-        `/${currentTargetDate.replace(/\s\/\s/g, "")}`;
+function getMenu(targetDate) {
+    const getURL = "http://localhost:4000/get" + `/${targetDate.replace(/\s\/\s/g, "")}`;
     return fetch(getURL)
         .then((response) => {
         if (!response.ok) {
@@ -161,21 +139,28 @@ const getMenuData1 = (currentTargetDate) => {
         return response.json();
     })
         .then((data) => {
-        menuData1 = data; // 응답 데이터를 변수에 저장
-        console.log(menuData1); // 저장된 데이터 처리
+        NamespaceUser.menuData = data;
+        console.log(NamespaceUser.menuData);
     })
         .catch((error) => {
         console.error("오류:", error);
     });
-};
-getMenuData1(currentTargetDate1).then(() => {
-    koreanFoodCornerSection_divElements === null || koreanFoodCornerSection_divElements === void 0 ? void 0 : koreanFoodCornerSection_divElements.forEach((div, idx) => {
-        div.textContent = menuData1[0].koreanFoodCorner[idx];
+}
+function renderMenu() {
+    NamespaceUser.targetDate =
+        todayYear.slice(-2) +
+            todayMonth.padStart(2, "0") +
+            todayDay.padStart(2, "0");
+    console.log(NamespaceUser.targetDate);
+    getMenu(NamespaceUser.targetDate).then(() => {
+        koreanFoodCornerSection_divElements === null || koreanFoodCornerSection_divElements === void 0 ? void 0 : koreanFoodCornerSection_divElements.forEach((div, idx) => {
+            div.textContent = NamespaceUser.menuData[0].koreanFoodCorner[idx];
+        });
+        hotCornerSection_divElements === null || hotCornerSection_divElements === void 0 ? void 0 : hotCornerSection_divElements.forEach((div, idx) => {
+            div.textContent = NamespaceUser.menuData[0].hotCorner[idx];
+        });
+        saladCornerSection_divElements === null || saladCornerSection_divElements === void 0 ? void 0 : saladCornerSection_divElements.forEach((div, idx) => {
+            div.textContent = NamespaceUser.menuData[0].saladCorner[idx];
+        });
     });
-    hotCornerSection_divElements === null || hotCornerSection_divElements === void 0 ? void 0 : hotCornerSection_divElements.forEach((div, idx) => {
-        div.textContent = menuData1[0].hotCorner[idx];
-    });
-    saladCornerSection_divElements === null || saladCornerSection_divElements === void 0 ? void 0 : saladCornerSection_divElements.forEach((div, idx) => {
-        div.textContent = menuData1[0].saladCorner[idx];
-    });
-});
+}
