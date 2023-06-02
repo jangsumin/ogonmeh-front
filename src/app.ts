@@ -1,19 +1,23 @@
-// 드롭다운 구현
-const dropdown: HTMLInputElement | null = document.querySelector(".dropdown");
-const hamburgerButton: HTMLInputElement | null =
-  document.querySelector(".hamburger-button");
-let isDropdownOpen: boolean = false;
-hamburgerButton?.addEventListener("click", () => {
-  if (dropdown) {
-    if (!isDropdownOpen) {
-      dropdown.style.height = "200px";
-      isDropdownOpen = !isDropdownOpen;
-    } else {
-      dropdown.style.height = "0";
-      isDropdownOpen = !isDropdownOpen;
+function executeDropdown(): void {
+  const dropdown: HTMLInputElement | null = document.querySelector(".dropdown");
+  const hamburgerButton: HTMLInputElement | null =
+    document.querySelector(".hamburger-button");
+  let isDropdownOpen: boolean = false;
+
+  hamburgerButton?.addEventListener("click", () => {
+    if (dropdown) {
+      if (!isDropdownOpen) {
+        dropdown.style.height = "200px";
+        isDropdownOpen = !isDropdownOpen;
+      } else {
+        dropdown.style.height = "0";
+        isDropdownOpen = !isDropdownOpen;
+      }
     }
-  }
-});
+  });
+}
+
+executeDropdown();
 
 // 매니저 로그인 버튼 클릭 시, 로그인 모달 나타나도록 구현
 const managerLoginButton: HTMLInputElement | null = document.querySelector(
