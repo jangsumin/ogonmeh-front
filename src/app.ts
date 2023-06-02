@@ -19,26 +19,30 @@ function executeDropdown(): void {
 
 executeDropdown();
 
-// 매니저 로그인 버튼 클릭 시, 로그인 모달 나타나도록 구현
-const managerLoginButton: HTMLInputElement | null = document.querySelector(
-  ".manager-login-button"
-);
-const modalWrap: HTMLInputElement | null =
-  document.querySelector(".modal-wrap");
-const modalWrapBg: HTMLInputElement | null =
-  document.querySelector(".modal-wrap-bg");
-const modalCloseButton: HTMLInputElement | null = document.querySelector(
-  ".modal-close-button"
-);
-managerLoginButton?.addEventListener("click", () => {
-  modalWrap?.classList.remove("hidden");
-});
-modalWrapBg?.addEventListener("click", () => {
-  modalWrap?.classList.add("hidden");
-});
-modalCloseButton?.addEventListener("click", () => {
-  modalWrap?.classList.add("hidden");
-});
+function executeLoginModal(): void {
+  const managerLoginButton: HTMLInputElement | null = document.querySelector(
+    ".manager-login-button"
+  );
+  const modalWrap: HTMLInputElement | null =
+    document.querySelector(".modal-wrap");
+  const modalWrapBg: HTMLInputElement | null =
+    document.querySelector(".modal-wrap-bg");
+  const modalCloseButton: HTMLInputElement | null = document.querySelector(
+    ".modal-close-button"
+  );
+
+  managerLoginButton?.addEventListener("click", () => {
+    modalWrap?.classList.remove("hidden");
+  });
+  modalWrapBg?.addEventListener("click", () => {
+    modalWrap?.classList.add("hidden");
+  });
+  modalCloseButton?.addEventListener("click", () => {
+    modalWrap?.classList.add("hidden");
+  });
+}
+
+executeLoginModal();
 
 let currentTargetDate1: string = "";
 

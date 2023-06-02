@@ -17,20 +17,22 @@ function executeDropdown() {
     });
 }
 executeDropdown();
-// 매니저 로그인 버튼 클릭 시, 로그인 모달 나타나도록 구현
-const managerLoginButton = document.querySelector(".manager-login-button");
-const modalWrap = document.querySelector(".modal-wrap");
-const modalWrapBg = document.querySelector(".modal-wrap-bg");
-const modalCloseButton = document.querySelector(".modal-close-button");
-managerLoginButton === null || managerLoginButton === void 0 ? void 0 : managerLoginButton.addEventListener("click", () => {
-    modalWrap === null || modalWrap === void 0 ? void 0 : modalWrap.classList.remove("hidden");
-});
-modalWrapBg === null || modalWrapBg === void 0 ? void 0 : modalWrapBg.addEventListener("click", () => {
-    modalWrap === null || modalWrap === void 0 ? void 0 : modalWrap.classList.add("hidden");
-});
-modalCloseButton === null || modalCloseButton === void 0 ? void 0 : modalCloseButton.addEventListener("click", () => {
-    modalWrap === null || modalWrap === void 0 ? void 0 : modalWrap.classList.add("hidden");
-});
+function executeLoginModal() {
+    const managerLoginButton = document.querySelector(".manager-login-button");
+    const modalWrap = document.querySelector(".modal-wrap");
+    const modalWrapBg = document.querySelector(".modal-wrap-bg");
+    const modalCloseButton = document.querySelector(".modal-close-button");
+    managerLoginButton === null || managerLoginButton === void 0 ? void 0 : managerLoginButton.addEventListener("click", () => {
+        modalWrap === null || modalWrap === void 0 ? void 0 : modalWrap.classList.remove("hidden");
+    });
+    modalWrapBg === null || modalWrapBg === void 0 ? void 0 : modalWrapBg.addEventListener("click", () => {
+        modalWrap === null || modalWrap === void 0 ? void 0 : modalWrap.classList.add("hidden");
+    });
+    modalCloseButton === null || modalCloseButton === void 0 ? void 0 : modalCloseButton.addEventListener("click", () => {
+        modalWrap === null || modalWrap === void 0 ? void 0 : modalWrap.classList.add("hidden");
+    });
+}
+executeLoginModal();
 let currentTargetDate1 = "";
 // 날짜 이동 구현
 const dateText = document.querySelector(".date-text");
