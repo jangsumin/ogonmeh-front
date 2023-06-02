@@ -119,7 +119,7 @@ header .main-nav-bar .hamburger-button {
   cursor: pointer;
   width: 35px;
   background-color: var(--main-nav-color);
-  background-image: url("./public/assets/hamburger_button.png");
+  background-image: url("../images/hamburger_button.png");
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
@@ -191,7 +191,7 @@ main .date-button .yesterday-menu-button {
   cursor: pointer;
   width: 30px;
   background-color: var(--main-bg-color);
-  background-image: url("./public/assets/left_button.png");
+  background-image: url("../images/left_button.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
@@ -215,7 +215,7 @@ main .date-button .tomorrow-menu-button {
   cursor: pointer;
   width: 30px;
   background-color: var(--main-bg-color);
-  background-image: url("./public/assets/right_button.png");
+  background-image: url("../images/right_button.png");
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
