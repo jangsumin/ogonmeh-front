@@ -1,3 +1,4 @@
+// 메뉴 인터페이스 선언
 interface Menu {
   date?: string;
   koreanFoodCorner: string[];
@@ -5,6 +6,7 @@ interface Menu {
   saladCorner: string[];
 }
 
+// 사용자 페이지 네임스페이스
 namespace NamespaceUser {
   export const dateText: HTMLInputElement | null =
     document.querySelector(".date-text");
@@ -13,12 +15,62 @@ namespace NamespaceUser {
   export const todayDate: Date = new Date();
 }
 
-function executeDropdown(): void {
-  const dropdown: HTMLInputElement | null = document.querySelector(".dropdown");
-  const hamburgerButton: HTMLInputElement | null =
-    document.querySelector(".hamburger-button");
-  let isDropdownOpen: boolean = false;
+// 드롭다운 요소
+const dropdown: HTMLInputElement | null = document.querySelector(".dropdown");
+// 햄버거 버튼
+const hamburgerButton: HTMLInputElement | null =
+  document.querySelector(".hamburger-button");
+// 매니저 로그인 버튼
+const managerLoginButton: HTMLInputElement | null = document.querySelector(
+  ".manager-login-button"
+);
+// 모달 구역
+const modalWrap: HTMLInputElement | null =
+  document.querySelector(".modal-wrap");
+// 모달 배경
+const modalWrapBg: HTMLInputElement | null =
+  document.querySelector(".modal-wrap-bg");
+// 모달 닫기 버튼
+const modalCloseButton: HTMLInputElement | null = document.querySelector(
+  ".modal-close-button"
+);
+// 현재 기준 어제로 가는 삼각형 버튼
+const yesterdayMenuButton: HTMLInputElement | null = document.querySelector(
+  ".yesterday-menu-button"
+);
+// 현재 기준 내일로 가는 삼각형 버튼
+const tomorrowMenuButton: HTMLInputElement | null = document.querySelector(
+  ".tomorrow-menu-button"
+);
+// 현재 날짜 상태
+let todayDate: Date = NamespaceUser.todayDate;
+let todayYear: string = String(todayDate.getFullYear());
+let todayMonth: string = String(todayDate.getMonth() + 1);
+let todayDay: string = String(todayDate.getDate());
+// 한식 코너 section
+const koreanFoodCornerSection: HTMLInputElement | null = document.querySelector(
+  "main .korean-food-corner"
+);
+// 핫 코너 section
+const hotCornerSection: HTMLInputElement | null =
+  document.querySelector("main .hot-corner");
+// 샐러드 코너 section
+const saladCornerSection: HTMLInputElement | null =
+  document.querySelector("main .salad-corner");
+// 한식 코너 section 내 모든 div 요소들
+const koreanFoodCornerSection_divElements:
+  | NodeListOf<HTMLDivElement>
+  | undefined = koreanFoodCornerSection?.querySelectorAll("div");
+// 핫 코너 section 내 모든 div 요소들
+const hotCornerSection_divElements: NodeListOf<HTMLDivElement> | undefined =
+  hotCornerSection?.querySelectorAll("div");
+// 샐러드 코너 section 내 모든 div 요소들
+const saladCornerSection_divElements: NodeListOf<HTMLDivElement> | undefined =
+  saladCornerSection?.querySelectorAll("div");
 
+// 사용자 페이지 : 드롭다운 기능 수행
+function executeDropdown(): void {
+  let isDropdownOpen: boolean = false;
   hamburgerButton?.addEventListener("click", () => {
     if (dropdown) {
       if (!isDropdownOpen) {
@@ -34,18 +86,8 @@ function executeDropdown(): void {
 
 executeDropdown();
 
+// 사용자 페이지 : 로그인 모달 띄우기
 function executeLoginModal(): void {
-  const managerLoginButton: HTMLInputElement | null = document.querySelector(
-    ".manager-login-button"
-  );
-  const modalWrap: HTMLInputElement | null =
-    document.querySelector(".modal-wrap");
-  const modalWrapBg: HTMLInputElement | null =
-    document.querySelector(".modal-wrap-bg");
-  const modalCloseButton: HTMLInputElement | null = document.querySelector(
-    ".modal-close-button"
-  );
-
   managerLoginButton?.addEventListener("click", () => {
     modalWrap?.classList.remove("hidden");
   });
@@ -59,18 +101,7 @@ function executeLoginModal(): void {
 
 executeLoginModal();
 
-const yesterdayMenuButton: HTMLInputElement | null = document.querySelector(
-  ".yesterday-menu-button"
-);
-const tomorrowMenuButton: HTMLInputElement | null = document.querySelector(
-  ".tomorrow-menu-button"
-);
-
-let todayDate: Date = NamespaceUser.todayDate;
-let todayYear: string = String(todayDate.getFullYear());
-let todayMonth: string = String(todayDate.getMonth() + 1);
-let todayDay: string = String(todayDate.getDate());
-
+// 사용자 페이지 : 같은 날짜인지 비교하는 함수 수행으로 현재 기준 어제로 가는 버튼 접근 막기
 function isSameDate(date1: Date, date2: Date): boolean {
   if (date1.getFullYear() !== date2.getFullYear()) {
     return false;
@@ -84,6 +115,7 @@ function isSameDate(date1: Date, date2: Date): boolean {
   return true;
 }
 
+// 사용자 페이지 : 오늘의 메뉴를 렌더링
 function renderTodayMenu(): void {
   if (NamespaceUser.dateText) {
     NamespaceUser.dateText.innerText =
@@ -101,6 +133,7 @@ function renderTodayMenu(): void {
 
 renderTodayMenu();
 
+// 사용자 페이지 : 현재 기준 어제로 가는 버튼을 누르고 나서 메뉴를 렌더링
 function renderYesterdayMenu(): void {
   yesterdayMenuButton?.addEventListener("click", () => {
     todayDate = new Date(todayDate.setDate(todayDate.getDate() - 1));
@@ -128,6 +161,7 @@ function renderYesterdayMenu(): void {
 
 renderYesterdayMenu();
 
+// 사용자 페이지 : 현재 기준 내일로 가는 버튼을 누르고 나서 메뉴를 렌더링
 function renderTomorrowMenu(): void {
   tomorrowMenuButton?.addEventListener("click", () => {
     todayDate = new Date(todayDate.setDate(todayDate.getDate() + 1));
@@ -155,22 +189,7 @@ function renderTomorrowMenu(): void {
 
 renderTomorrowMenu();
 
-const koreanFoodCornerSection: HTMLInputElement | null = document.querySelector(
-  "main .korean-food-corner"
-);
-const hotCornerSection: HTMLInputElement | null =
-  document.querySelector("main .hot-corner");
-const saladCornerSection: HTMLInputElement | null =
-  document.querySelector("main .salad-corner");
-
-const koreanFoodCornerSection_divElements:
-  | NodeListOf<HTMLDivElement>
-  | undefined = koreanFoodCornerSection?.querySelectorAll("div");
-const hotCornerSection_divElements: NodeListOf<HTMLDivElement> | undefined =
-  hotCornerSection?.querySelectorAll("div");
-const saladCornerSection_divElements: NodeListOf<HTMLDivElement> | undefined =
-  saladCornerSection?.querySelectorAll("div");
-
+// 사용자 페이지 : 메뉴 데이터를 GET 요청
 function getMenu(targetDate: string): Promise<void> {
   const getURL: string =
     "http://localhost:4000/get" + `/${targetDate.replace(/\s\/\s/g, "")}`;
@@ -190,6 +209,7 @@ function getMenu(targetDate: string): Promise<void> {
     });
 }
 
+// 사용자 페이지 : 메뉴를 렌더링
 function renderMenu(): void {
   NamespaceUser.targetDate =
     todayYear.slice(-2) +
