@@ -1,6 +1,16 @@
+interface Menu {
+  date?: string;
+  koreanFoodCorner: string[];
+  hotCorner: string[];
+  saladCorner: string[];
+}
+
 namespace NamespaceUser {
+  export const dateText: HTMLInputElement | null =
+    document.querySelector(".date-text");
   export let targetDate: string = "";
   export let menuData: Array<Menu>;
+  export const todayDate: Date = new Date();
 }
 
 function executeDropdown(): void {
@@ -49,7 +59,6 @@ function executeLoginModal(): void {
 
 executeLoginModal();
 
-const dateText: HTMLInputElement | null = document.querySelector(".date-text");
 const yesterdayMenuButton: HTMLInputElement | null = document.querySelector(
   ".yesterday-menu-button"
 );
@@ -57,7 +66,7 @@ const tomorrowMenuButton: HTMLInputElement | null = document.querySelector(
   ".tomorrow-menu-button"
 );
 
-let todayDate: Date = new Date();
+let todayDate: Date = NamespaceUser.todayDate;
 let todayYear: string = String(todayDate.getFullYear());
 let todayMonth: string = String(todayDate.getMonth() + 1);
 let todayDay: string = String(todayDate.getDate());
@@ -76,8 +85,8 @@ function isSameDate(date1: Date, date2: Date): boolean {
 }
 
 function renderTodayMenu(): void {
-  if (dateText) {
-    dateText.innerText =
+  if (NamespaceUser.dateText) {
+    NamespaceUser.dateText.innerText =
       todayYear +
       "." +
       todayMonth.padStart(2, "0") +
@@ -98,8 +107,8 @@ function renderYesterdayMenu(): void {
     todayYear = String(todayDate.getFullYear());
     todayMonth = String(todayDate.getMonth() + 1);
     todayDay = String(todayDate.getDate());
-    if (dateText) {
-      dateText.innerText =
+    if (NamespaceUser.dateText) {
+      NamespaceUser.dateText.innerText =
         todayYear +
         "." +
         todayMonth.padStart(2, "0") +
@@ -125,8 +134,8 @@ function renderTomorrowMenu(): void {
     todayYear = String(todayDate.getFullYear());
     todayMonth = String(todayDate.getMonth() + 1);
     todayDay = String(todayDate.getDate());
-    if (dateText) {
-      dateText.innerText =
+    if (NamespaceUser.dateText) {
+      NamespaceUser.dateText.innerText =
         todayYear +
         "." +
         todayMonth.padStart(2, "0") +

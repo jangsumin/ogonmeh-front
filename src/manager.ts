@@ -1,17 +1,12 @@
-interface Menu {
-  date?: string;
-  koreanFoodCorner: string[];
-  hotCorner: string[];
-  saladCorner: string[];
-}
-
-const form: HTMLFormElement | null = document.querySelector(".menu-input-form");
-// 메인 페이지의 dateText 변수와 충돌하므로 namespace 사용
 namespace NamespaceManager {
   export const dateText: HTMLInputElement | null =
     document.querySelector(".date-text");
+  export let targetDate = "";
+  export let menuData: Array<Menu>;
   export const todayDate: Date = new Date();
 }
+
+const form: HTMLFormElement | null = document.querySelector(".menu-input-form");
 const updateButton: HTMLInputElement | null =
   document.querySelector(".update-button");
 let formData: FormData | null;
@@ -20,15 +15,12 @@ const KOREAN_FOOD_MENU: string = "korean-food-menu";
 const HOT_MENU: string = "hot-menu";
 const SALAD_MENU: string = "salad-menu";
 
-// 처음 렌더링 시, 오늘의 날짜가 form에 나타나도록 설정
-let currentTargetDate = "";
-
 if (NamespaceManager.dateText) {
   NamespaceManager.dateText.textContent = [
     String(NamespaceManager.todayDate.getFullYear()).slice(-2),
     convertDateToString(NamespaceManager.todayDate),
   ].join(" / ");
-  currentTargetDate = NamespaceManager.dateText.textContent;
+  NamespaceManager.targetDate = NamespaceManager.dateText.textContent;
 }
 
 updateButton?.addEventListener("click", () => {
@@ -141,16 +133,17 @@ function createListElement(date: Date, idx: number): void {
           String(NamespaceManager.todayDate.getFullYear()).slice(-2),
           li.textContent,
         ].join(" / ");
-        currentTargetDate = NamespaceManager.dateText.textContent;
-        getMenuData(currentTargetDate).then(() => {
+        NamespaceManager.targetDate = NamespaceManager.dateText.textContent;
+        getMenuData(NamespaceManager.targetDate).then(() => {
           koreanFoodCorner_divElements?.forEach((div, idx) => {
-            div.textContent = menuData[0].koreanFoodCorner[idx];
+            div.textContent =
+              NamespaceManager.menuData[0].koreanFoodCorner[idx];
           });
           hotCorner_divElements?.forEach((div, idx) => {
-            div.textContent = menuData[0].hotCorner[idx];
+            div.textContent = NamespaceManager.menuData[0].hotCorner[idx];
           });
           saladCorner_divElements?.forEach((div, idx) => {
-            div.textContent = menuData[0].saladCorner[idx];
+            div.textContent = NamespaceManager.menuData[0].saladCorner[idx];
           });
         });
       }
@@ -236,7 +229,6 @@ const hotCorner_divElements: NodeListOf<HTMLDivElement> | undefined =
 const saladCorner_divElements: NodeListOf<HTMLDivElement> | undefined =
   saladCornerView?.querySelectorAll("div");
 
-let menuData: Array<Menu>;
 const getMenuData = (currentTargetDate: string) => {
   const getURL: string =
     "http://localhost:4000/get" +
@@ -249,21 +241,21 @@ const getMenuData = (currentTargetDate: string) => {
       return response.json();
     })
     .then((data) => {
-      menuData = data; // 응답 데이터를 변수에 저장
-      console.log(menuData); // 저장된 데이터 처리
+      NamespaceManager.menuData = data; // 응답 데이터를 변수에 저장
+      console.log(NamespaceManager.menuData); // 저장된 데이터 처리
     })
     .catch((error) => {
       console.error("오류:", error);
     });
 };
-getMenuData(currentTargetDate).then(() => {
+getMenuData(NamespaceManager.targetDate).then(() => {
   koreanFoodCorner_divElements?.forEach((div, idx) => {
-    div.textContent = menuData[0].koreanFoodCorner[idx];
+    div.textContent = NamespaceManager.menuData[0].koreanFoodCorner[idx];
   });
   hotCorner_divElements?.forEach((div, idx) => {
-    div.textContent = menuData[0].hotCorner[idx];
+    div.textContent = NamespaceManager.menuData[0].hotCorner[idx];
   });
   saladCorner_divElements?.forEach((div, idx) => {
-    div.textContent = menuData[0].saladCorner[idx];
+    div.textContent = NamespaceManager.menuData[0].saladCorner[idx];
   });
 });

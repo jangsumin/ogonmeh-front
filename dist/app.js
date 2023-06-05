@@ -1,7 +1,9 @@
 "use strict";
 var NamespaceUser;
 (function (NamespaceUser) {
+    NamespaceUser.dateText = document.querySelector(".date-text");
     NamespaceUser.targetDate = "";
+    NamespaceUser.todayDate = new Date();
 })(NamespaceUser || (NamespaceUser = {}));
 function executeDropdown() {
     const dropdown = document.querySelector(".dropdown");
@@ -37,10 +39,9 @@ function executeLoginModal() {
     });
 }
 executeLoginModal();
-const dateText = document.querySelector(".date-text");
 const yesterdayMenuButton = document.querySelector(".yesterday-menu-button");
 const tomorrowMenuButton = document.querySelector(".tomorrow-menu-button");
-let todayDate = new Date();
+let todayDate = NamespaceUser.todayDate;
 let todayYear = String(todayDate.getFullYear());
 let todayMonth = String(todayDate.getMonth() + 1);
 let todayDay = String(todayDate.getDate());
@@ -57,8 +58,8 @@ function isSameDate(date1, date2) {
     return true;
 }
 function renderTodayMenu() {
-    if (dateText) {
-        dateText.innerText =
+    if (NamespaceUser.dateText) {
+        NamespaceUser.dateText.innerText =
             todayYear +
                 "." +
                 todayMonth.padStart(2, "0") +
@@ -77,8 +78,8 @@ function renderYesterdayMenu() {
         todayYear = String(todayDate.getFullYear());
         todayMonth = String(todayDate.getMonth() + 1);
         todayDay = String(todayDate.getDate());
-        if (dateText) {
-            dateText.innerText =
+        if (NamespaceUser.dateText) {
+            NamespaceUser.dateText.innerText =
                 todayYear +
                     "." +
                     todayMonth.padStart(2, "0") +
@@ -103,8 +104,8 @@ function renderTomorrowMenu() {
         todayYear = String(todayDate.getFullYear());
         todayMonth = String(todayDate.getMonth() + 1);
         todayDay = String(todayDate.getDate());
-        if (dateText) {
-            dateText.innerText =
+        if (NamespaceUser.dateText) {
+            NamespaceUser.dateText.innerText =
                 todayYear +
                     "." +
                     todayMonth.padStart(2, "0") +
