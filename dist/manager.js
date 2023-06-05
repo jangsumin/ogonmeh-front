@@ -6,6 +6,42 @@ var NamespaceManager;
     NamespaceManager.targetDate = "";
     NamespaceManager.todayDate = new Date();
 })(NamespaceManager || (NamespaceManager = {}));
+// 1주차
+const dateList1 = document.querySelector(".date-list1");
+// 2주차
+const dateList2 = document.querySelector(".date-list2");
+// 3주차
+const dateList3 = document.querySelector(".date-list3");
+// 4주차
+const dateList4 = document.querySelector(".date-list4");
+// 메뉴를 입력할 수 있는 input요소들이 있는 form 요소
+const form = document.querySelector(".menu-input-form");
+// 업데이트 버튼
+const updateButton = document.querySelector(".update-button");
+// 한식 코너 input 요소들의 묶음 요소
+const koreanFoodCornerInput = document.querySelector(".lower-wrap .korean-food-corner");
+// 핫 코너 input 요소들의 묶음 요소
+const hotCornerInput = document.querySelector(".lower-wrap .hot-corner");
+// 샐러드 코너 input 요소들의 묶음 요소
+const saladCornerInput = document.querySelector(".lower-wrap .salad-corner");
+// 한식 코너의 input 요소들
+const koreanFoodCorner_inputElements = koreanFoodCornerInput === null || koreanFoodCornerInput === void 0 ? void 0 : koreanFoodCornerInput.querySelectorAll("input");
+// 핫 코너의 input 요소들
+const hotCorner_inputElements = hotCornerInput === null || hotCornerInput === void 0 ? void 0 : hotCornerInput.querySelectorAll("input");
+// 샐러드 코너의 input 요소들
+const saladCorner_inputElements = saladCornerInput === null || saladCornerInput === void 0 ? void 0 : saladCornerInput.querySelectorAll("input");
+// 한식 코너 뷰 section
+const koreanFoodCornerView = document.querySelector(".view-section .korean-food-corner");
+// 핫 코너 뷰 section
+const hotCornerView = document.querySelector(".view-section .hot-corner");
+// 샐러드 코너 뷰 section
+const saladCornerView = document.querySelector(".view-section .salad-corner");
+// 한식 코너 뷰 section내 모든 div 요소들
+const koreanFoodCorner_divElements = koreanFoodCornerView === null || koreanFoodCornerView === void 0 ? void 0 : koreanFoodCornerView.querySelectorAll("div");
+// 핫 코너 뷰 section내 모든 div 요소들
+const hotCorner_divElements = hotCornerView === null || hotCornerView === void 0 ? void 0 : hotCornerView.querySelectorAll("div");
+// 샐러드 코너 뷰 section내 모든 div 요소들
+const saladCorner_divElements = saladCornerView === null || saladCornerView === void 0 ? void 0 : saladCornerView.querySelectorAll("div");
 // 관리자 페이지 : 날짜 형식을 문자열 형식으로 변환
 function convertDateToString(date) {
     const month = date.getMonth() + 1;
@@ -81,10 +117,6 @@ function createListElement(date, idx) {
         li.style.color = "#e66060";
         li.style.opacity = "0.33";
     }
-    const dateList1 = document.querySelector(".date-list1");
-    const dateList2 = document.querySelector(".date-list2");
-    const dateList3 = document.querySelector(".date-list3");
-    const dateList4 = document.querySelector(".date-list4");
     if (Math.floor(idx / 7) === 0) {
         dateList1 === null || dateList1 === void 0 ? void 0 : dateList1.appendChild(li);
     }
@@ -115,7 +147,6 @@ renderFourWeeksFromBeforeMondayDate();
 // 관리자 페이지 : 메뉴 데이터를 POST 요청
 function postMenu() {
     var _a, _b, _c, _d;
-    const form = document.querySelector(".menu-input-form");
     let formData;
     const KOREAN_FOOD_MENU = "korean-food-menu";
     const HOT_MENU = "hot-menu";
@@ -160,7 +191,6 @@ function postMenu() {
         console.error(error);
     });
 }
-const updateButton = document.querySelector(".update-button");
 // 관리자 페이지 : 업데이트 버튼 클릭을 통한 메뉴 POST 요청 실행
 function executeUpdateButton() {
     updateButton === null || updateButton === void 0 ? void 0 : updateButton.addEventListener("click", () => {
@@ -170,12 +200,6 @@ function executeUpdateButton() {
 executeUpdateButton();
 // 관리자 페이지 : 오늘의 날짜가 주말일 때 업데이트 버튼이 보이지 않고, input 요소에 접근이 불가능한 기능 수행
 function stopAccessToWeekend() {
-    const koreanFoodCornerInput = document.querySelector(".lower-wrap .korean-food-corner");
-    const hotCornerInput = document.querySelector(".lower-wrap .hot-corner");
-    const saladCornerInput = document.querySelector(".lower-wrap .salad-corner");
-    const koreanFoodCorner_inputElements = koreanFoodCornerInput === null || koreanFoodCornerInput === void 0 ? void 0 : koreanFoodCornerInput.querySelectorAll("input");
-    const hotCorner_inputElements = hotCornerInput === null || hotCornerInput === void 0 ? void 0 : hotCornerInput.querySelectorAll("input");
-    const saladCorner_inputElements = saladCornerInput === null || saladCornerInput === void 0 ? void 0 : saladCornerInput.querySelectorAll("input");
     if (NamespaceManager.todayDate.getDay() === 0 ||
         NamespaceManager.todayDate.getDay() === 6) {
         if (updateButton) {
@@ -211,12 +235,6 @@ function getMenuInManagerPage(targetDate) {
         console.error("오류:", error);
     });
 }
-const koreanFoodCornerView = document.querySelector(".view-section .korean-food-corner");
-const hotCornerView = document.querySelector(".view-section .hot-corner");
-const saladCornerView = document.querySelector(".view-section .salad-corner");
-const koreanFoodCorner_divElements = koreanFoodCornerView === null || koreanFoodCornerView === void 0 ? void 0 : koreanFoodCornerView.querySelectorAll("div");
-const hotCorner_divElements = hotCornerView === null || hotCornerView === void 0 ? void 0 : hotCornerView.querySelectorAll("div");
-const saladCorner_divElements = saladCornerView === null || saladCornerView === void 0 ? void 0 : saladCornerView.querySelectorAll("div");
 // 관리자 페이지 : 선택한 날짜의 메뉴를 렌더링
 function renderMenuInManagerPage() {
     getMenuInManagerPage(NamespaceManager.targetDate).then(() => {
