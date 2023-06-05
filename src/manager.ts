@@ -1,3 +1,4 @@
+// 관리자 페이지 네임스페이스
 namespace NamespaceManager {
   export const dateText: HTMLInputElement | null =
     document.querySelector(".date-text");
@@ -6,24 +7,143 @@ namespace NamespaceManager {
   export const todayDate: Date = new Date();
 }
 
-const form: HTMLFormElement | null = document.querySelector(".menu-input-form");
-const updateButton: HTMLInputElement | null =
-  document.querySelector(".update-button");
-let formData: FormData | null;
-
-const KOREAN_FOOD_MENU: string = "korean-food-menu";
-const HOT_MENU: string = "hot-menu";
-const SALAD_MENU: string = "salad-menu";
-
-if (NamespaceManager.dateText) {
-  NamespaceManager.dateText.textContent = [
-    String(NamespaceManager.todayDate.getFullYear()).slice(-2),
-    convertDateToString(NamespaceManager.todayDate),
+// 관리자 페이지 : 날짜 형식을 문자열 형식으로 변환
+function convertDateToString(date: Date): string {
+  const month: number = date.getMonth() + 1;
+  const day: number = date.getDate();
+  const dateStr: string = [
+    String(month).padStart(2, "0"),
+    String(day).padStart(2, "0"),
   ].join(" / ");
-  NamespaceManager.targetDate = NamespaceManager.dateText.textContent;
+  return dateStr;
 }
 
-updateButton?.addEventListener("click", () => {
+// 관리자 페이지 : 초기에 오늘의 날짜를 렌더링
+function renderTodayDate(): void {
+  if (NamespaceManager.dateText) {
+    NamespaceManager.dateText.textContent = [
+      String(NamespaceManager.todayDate.getFullYear()).slice(-2),
+      convertDateToString(NamespaceManager.todayDate),
+    ].join(" / ");
+    NamespaceManager.targetDate = NamespaceManager.dateText.textContent;
+  }
+}
+
+renderTodayDate();
+
+// 관리자 페이지 : 두 날짜의 비교 함수를 통해 오늘보다 작은 날짜들에 접근 불가토록 설정
+function compareDates(date1: Date, date2: Date): boolean {
+  let isDate1SmallerThanDate2: boolean;
+  if (
+    date1.getMonth() < date2.getMonth()
+      ? true
+      : date1.getMonth() === date2.getMonth()
+      ? date1.getDate() < date2.getDate()
+        ? true
+        : false
+      : false
+  ) {
+    isDate1SmallerThanDate2 = true;
+  } else {
+    isDate1SmallerThanDate2 = false;
+  }
+  return isDate1SmallerThanDate2;
+}
+
+// 관리자 페이지 : 요일과 이미 지난 날짜 조건에 따라 접근 가능한 li 요소와 접근 불가한 li 요소 생성
+function createListElement(date: Date, idx: number): void {
+  const li: HTMLLIElement = document.createElement("li");
+  li.textContent = convertDateToString(date);
+
+  if (
+    !(date.getDay() === 0 || date.getDay() === 6) &&
+    !compareDates(date, NamespaceManager.todayDate)
+  ) {
+    li.addEventListener("click", () => {
+      if (NamespaceManager.dateText) {
+        NamespaceManager.dateText.textContent = [
+          String(NamespaceManager.todayDate.getFullYear()).slice(-2),
+          li.textContent,
+        ].join(" / ");
+        NamespaceManager.targetDate = NamespaceManager.dateText.textContent;
+        getMenuInManagerPage(NamespaceManager.targetDate).then(() => {
+          koreanFoodCorner_divElements?.forEach((div, idx) => {
+            div.textContent =
+              NamespaceManager.menuData[0].koreanFoodCorner[idx];
+          });
+          hotCorner_divElements?.forEach((div, idx) => {
+            div.textContent = NamespaceManager.menuData[0].hotCorner[idx];
+          });
+          saladCorner_divElements?.forEach((div, idx) => {
+            div.textContent = NamespaceManager.menuData[0].saladCorner[idx];
+          });
+        });
+      }
+    });
+  }
+
+  if (compareDates(date, NamespaceManager.todayDate)) {
+    li.style.cursor = "auto";
+    li.style.opacity = "0.33";
+  }
+  if (idx % 7 === 5 || idx % 7 === 6) {
+    li.style.cursor = "auto";
+    li.style.color = "#e66060";
+    li.style.opacity = "0.33";
+  }
+
+  const dateList1: HTMLInputElement | null =
+    document.querySelector(".date-list1");
+  const dateList2: HTMLInputElement | null =
+    document.querySelector(".date-list2");
+  const dateList3: HTMLInputElement | null =
+    document.querySelector(".date-list3");
+  const dateList4: HTMLInputElement | null =
+    document.querySelector(".date-list4");
+  if (Math.floor(idx / 7) === 0) {
+    dateList1?.appendChild(li);
+  }
+  if (Math.floor(idx / 7) === 1) {
+    dateList2?.appendChild(li);
+  }
+  if (Math.floor(idx / 7) === 2) {
+    dateList3?.appendChild(li);
+  }
+  if (Math.floor(idx / 7) === 3) {
+    dateList4?.appendChild(li);
+  }
+}
+
+// 관리자 페이지 : 이번주 월요일을 기준으로 이후 28일의 날짜들을 렌더링
+function renderFourWeeksFromBeforeMondayDate(): void {
+  const startDate = new Date();
+  const datesInFourWeeks: Date[] = [];
+  startDate.setDate(
+    startDate.getDate() -
+      (startDate.getDay() === 0 ? 6 : startDate.getDay() - 1)
+  );
+  for (let i = 0; i < 28; i++) {
+    datesInFourWeeks.push(
+      new Date(startDate.setDate(startDate.getDate() + (i === 0 ? 0 : 1)))
+    );
+  }
+  datesInFourWeeks.map((date, idx) => {
+    createListElement(date, idx);
+  });
+}
+
+renderFourWeeksFromBeforeMondayDate();
+
+// 관리자 페이지 : 메뉴 데이터를 POST 요청
+function postMenu(): void {
+  const form: HTMLFormElement | null =
+    document.querySelector(".menu-input-form");
+  let formData: FormData | null;
+
+  const KOREAN_FOOD_MENU: string = "korean-food-menu";
+  const HOT_MENU: string = "hot-menu";
+  const SALAD_MENU: string = "salad-menu";
+
   const data: Menu = {
     koreanFoodCorner: [],
     hotCorner: [],
@@ -51,7 +171,6 @@ updateButton?.addEventListener("click", () => {
     }
   }
   console.log(data);
-
   const URL: string = "http://localhost:4000/register";
   fetch(URL, {
     method: "POST",
@@ -67,151 +186,79 @@ updateButton?.addEventListener("click", () => {
     .catch((error) => {
       console.error(error);
     });
-});
-
-// 이번주 월요일부터 28일동안의 날짜들을 렌더링
-function convertDateToString(date: Date): string {
-  const month: number = date.getMonth() + 1;
-  const day: number = date.getDate();
-  const dateStr: string = [
-    String(month).padStart(2, "0"),
-    String(day).padStart(2, "0"),
-  ].join(" / ");
-  return dateStr;
 }
 
-const startDate = new Date();
-startDate.setDate(
-  startDate.getDate() - (startDate.getDay() === 0 ? 6 : startDate.getDay() - 1)
-);
+const updateButton: HTMLInputElement | null =
+  document.querySelector(".update-button");
+// 관리자 페이지 : 업데이트 버튼 클릭을 통한 메뉴 POST 요청 실행
+function executeUpdateButton() {
+  updateButton?.addEventListener("click", () => {
+    postMenu();
+  });
+}
 
-const datesInFourWeeks: Date[] = [];
-for (let i = 0; i < 28; i++) {
-  datesInFourWeeks.push(
-    new Date(startDate.setDate(startDate.getDate() + (i === 0 ? 0 : 1)))
+executeUpdateButton();
+
+// 관리자 페이지 : 오늘의 날짜가 주말일 때 업데이트 버튼이 보이지 않고, input 요소에 접근이 불가능한 기능 수행
+function stopAccessToWeekend() {
+  const koreanFoodCornerInput: HTMLInputElement | null = document.querySelector(
+    ".lower-wrap .korean-food-corner"
   );
-}
-
-const dateList1: HTMLInputElement | null =
-  document.querySelector(".date-list1");
-const dateList2: HTMLInputElement | null =
-  document.querySelector(".date-list2");
-const dateList3: HTMLInputElement | null =
-  document.querySelector(".date-list3");
-const dateList4: HTMLInputElement | null =
-  document.querySelector(".date-list4");
-
-function compareDates(date1: Date, date2: Date): boolean {
-  let isDate1SmallerThanDate2: boolean;
-  if (
-    date1.getMonth() < date2.getMonth()
-      ? true
-      : date1.getMonth() === date2.getMonth()
-      ? date1.getDate() < date2.getDate()
-        ? true
-        : false
-      : false
-  ) {
-    isDate1SmallerThanDate2 = true;
-  } else {
-    isDate1SmallerThanDate2 = false;
-  }
-  return isDate1SmallerThanDate2;
-}
-
-function createListElement(date: Date, idx: number): void {
-  const li: HTMLLIElement = document.createElement("li");
-  li.textContent = convertDateToString(date);
+  const hotCornerInput: HTMLInputElement | null = document.querySelector(
+    ".lower-wrap .hot-corner"
+  );
+  const saladCornerInput: HTMLInputElement | null = document.querySelector(
+    ".lower-wrap .salad-corner"
+  );
+  const koreanFoodCorner_inputElements:
+    | NodeListOf<HTMLInputElement>
+    | undefined = koreanFoodCornerInput?.querySelectorAll("input");
+  const hotCorner_inputElements: NodeListOf<HTMLInputElement> | undefined =
+    hotCornerInput?.querySelectorAll("input");
+  const saladCorner_inputElements: NodeListOf<HTMLInputElement> | undefined =
+    saladCornerInput?.querySelectorAll("input");
 
   if (
-    !(date.getDay() === 0 || date.getDay() === 6) &&
-    !compareDates(date, NamespaceManager.todayDate)
+    NamespaceManager.todayDate.getDay() === 0 ||
+    NamespaceManager.todayDate.getDay() === 6
   ) {
-    li.addEventListener("click", () => {
-      if (NamespaceManager.dateText) {
-        NamespaceManager.dateText.textContent = [
-          String(NamespaceManager.todayDate.getFullYear()).slice(-2),
-          li.textContent,
-        ].join(" / ");
-        NamespaceManager.targetDate = NamespaceManager.dateText.textContent;
-        getMenuData(NamespaceManager.targetDate).then(() => {
-          koreanFoodCorner_divElements?.forEach((div, idx) => {
-            div.textContent =
-              NamespaceManager.menuData[0].koreanFoodCorner[idx];
-          });
-          hotCorner_divElements?.forEach((div, idx) => {
-            div.textContent = NamespaceManager.menuData[0].hotCorner[idx];
-          });
-          saladCorner_divElements?.forEach((div, idx) => {
-            div.textContent = NamespaceManager.menuData[0].saladCorner[idx];
-          });
-        });
-      }
+    if (updateButton) {
+      updateButton.style.display = "none";
+    }
+    koreanFoodCorner_inputElements?.forEach((input) => {
+      input.disabled = true;
+    });
+    hotCorner_inputElements?.forEach((input) => {
+      input.disabled = true;
+    });
+    saladCorner_inputElements?.forEach((input) => {
+      input.disabled = true;
     });
   }
-
-  if (compareDates(date, NamespaceManager.todayDate)) {
-    li.style.cursor = "auto";
-    li.style.opacity = "0.33";
-  }
-  if (idx % 7 === 5 || idx % 7 === 6) {
-    li.style.cursor = "auto";
-    li.style.color = "#e66060";
-    li.style.opacity = "0.33";
-  }
-  if (Math.floor(idx / 7) === 0) {
-    dateList1?.appendChild(li);
-  }
-  if (Math.floor(idx / 7) === 1) {
-    dateList2?.appendChild(li);
-  }
-  if (Math.floor(idx / 7) === 2) {
-    dateList3?.appendChild(li);
-  }
-  if (Math.floor(idx / 7) === 3) {
-    dateList4?.appendChild(li);
-  }
 }
 
-const koreanFoodCornerInput: HTMLInputElement | null = document.querySelector(
-  ".lower-wrap .korean-food-corner"
-);
-const hotCornerInput: HTMLInputElement | null = document.querySelector(
-  ".lower-wrap .hot-corner"
-);
-const saladCornerInput: HTMLInputElement | null = document.querySelector(
-  ".lower-wrap .salad-corner"
-);
-const koreanFoodCorner_inputElements: NodeListOf<HTMLInputElement> | undefined =
-  koreanFoodCornerInput?.querySelectorAll("input");
-const hotCorner_inputElements: NodeListOf<HTMLInputElement> | undefined =
-  hotCornerInput?.querySelectorAll("input");
-const saladCorner_inputElements: NodeListOf<HTMLInputElement> | undefined =
-  saladCornerInput?.querySelectorAll("input");
+stopAccessToWeekend();
 
-datesInFourWeeks.map((date, idx) => {
-  createListElement(date, idx);
-});
-
-if (
-  NamespaceManager.todayDate.getDay() === 0 ||
-  NamespaceManager.todayDate.getDay() === 6
-) {
-  if (updateButton) {
-    updateButton.style.display = "none";
-  }
-  koreanFoodCorner_inputElements?.forEach((input) => {
-    input.disabled = true;
-  });
-  hotCorner_inputElements?.forEach((input) => {
-    input.disabled = true;
-  });
-  saladCorner_inputElements?.forEach((input) => {
-    input.disabled = true;
-  });
+// 관리자 페이지 : 선택한 날짜의 메뉴를 GET 요청
+function getMenuInManagerPage(targetDate: string): Promise<void> {
+  const getURL: string =
+    "http://localhost:4000/get" + `/${targetDate.replace(/\s\/\s/g, "")}`;
+  return fetch(getURL)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("데이터 가져오기 실패");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      NamespaceManager.menuData = data;
+      console.log(NamespaceManager.menuData);
+    })
+    .catch((error) => {
+      console.error("오류:", error);
+    });
 }
 
-// 데이터 GET 요청
 const koreanFoodCornerView: HTMLInputElement | null = document.querySelector(
   ".view-section .korean-food-corner"
 );
@@ -228,34 +275,19 @@ const hotCorner_divElements: NodeListOf<HTMLDivElement> | undefined =
   hotCornerView?.querySelectorAll("div");
 const saladCorner_divElements: NodeListOf<HTMLDivElement> | undefined =
   saladCornerView?.querySelectorAll("div");
-
-const getMenuData = (currentTargetDate: string) => {
-  const getURL: string =
-    "http://localhost:4000/get" +
-    `/${currentTargetDate.replace(/\s\/\s/g, "")}`;
-  return fetch(getURL)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("데이터 가져오기 실패");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      NamespaceManager.menuData = data; // 응답 데이터를 변수에 저장
-      console.log(NamespaceManager.menuData); // 저장된 데이터 처리
-    })
-    .catch((error) => {
-      console.error("오류:", error);
+// 관리자 페이지 : 선택한 날짜의 메뉴를 렌더링
+function renderMenuInManagerPage() {
+  getMenuInManagerPage(NamespaceManager.targetDate).then(() => {
+    koreanFoodCorner_divElements?.forEach((div, idx) => {
+      div.textContent = NamespaceManager.menuData[0].koreanFoodCorner[idx];
     });
-};
-getMenuData(NamespaceManager.targetDate).then(() => {
-  koreanFoodCorner_divElements?.forEach((div, idx) => {
-    div.textContent = NamespaceManager.menuData[0].koreanFoodCorner[idx];
+    hotCorner_divElements?.forEach((div, idx) => {
+      div.textContent = NamespaceManager.menuData[0].hotCorner[idx];
+    });
+    saladCorner_divElements?.forEach((div, idx) => {
+      div.textContent = NamespaceManager.menuData[0].saladCorner[idx];
+    });
   });
-  hotCorner_divElements?.forEach((div, idx) => {
-    div.textContent = NamespaceManager.menuData[0].hotCorner[idx];
-  });
-  saladCorner_divElements?.forEach((div, idx) => {
-    div.textContent = NamespaceManager.menuData[0].saladCorner[idx];
-  });
-});
+}
+
+renderMenuInManagerPage();
