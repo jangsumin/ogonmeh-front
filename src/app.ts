@@ -47,6 +47,8 @@ let todayDate: Date = NamespaceUser.todayDate;
 let todayYear: string = String(todayDate.getFullYear());
 let todayMonth: string = String(todayDate.getMonth() + 1);
 let todayDay: string = String(todayDate.getDate());
+// 요일 배열
+const days: Array<string> = ["일", "월", "화", "수", "목", "금", "토"];
 // 한식 코너 section
 const koreanFoodCornerSection: HTMLInputElement | null = document.querySelector(
   "main .korean-food-corner"
@@ -123,7 +125,8 @@ function renderTodayMenu(): void {
       "." +
       todayMonth.padStart(2, "0") +
       "." +
-      todayDay.padStart(2, "0");
+      todayDay.padStart(2, "0") +
+      `(${days[todayDate.getDay()]})`;
   }
   if (yesterdayMenuButton) {
     yesterdayMenuButton.style.visibility = "hidden";
@@ -146,7 +149,8 @@ function renderYesterdayMenu(): void {
         "." +
         todayMonth.padStart(2, "0") +
         "." +
-        todayDay.padStart(2, "0");
+        todayDay.padStart(2, "0") +
+        `(${days[todayDate.getDay()]})`;
     }
     if (yesterdayMenuButton) {
       if (!isSameDate(todayDate, new Date())) {
@@ -174,7 +178,8 @@ function renderTomorrowMenu(): void {
         "." +
         todayMonth.padStart(2, "0") +
         "." +
-        todayDay.padStart(2, "0");
+        todayDay.padStart(2, "0") +
+        `(${days[todayDate.getDay()]})`;
     }
     if (yesterdayMenuButton) {
       if (!isSameDate(todayDate, new Date())) {

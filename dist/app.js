@@ -27,6 +27,8 @@ let todayDate = NamespaceUser.todayDate;
 let todayYear = String(todayDate.getFullYear());
 let todayMonth = String(todayDate.getMonth() + 1);
 let todayDay = String(todayDate.getDate());
+// 요일 배열
+const days = ["일", "월", "화", "수", "목", "금", "토"];
 // 한식 코너 section
 const koreanFoodCornerSection = document.querySelector("main .korean-food-corner");
 // 핫 코너 section
@@ -90,7 +92,8 @@ function renderTodayMenu() {
                 "." +
                 todayMonth.padStart(2, "0") +
                 "." +
-                todayDay.padStart(2, "0");
+                todayDay.padStart(2, "0") +
+                `(${days[todayDate.getDay()]})`;
     }
     if (yesterdayMenuButton) {
         yesterdayMenuButton.style.visibility = "hidden";
@@ -111,7 +114,8 @@ function renderYesterdayMenu() {
                     "." +
                     todayMonth.padStart(2, "0") +
                     "." +
-                    todayDay.padStart(2, "0");
+                    todayDay.padStart(2, "0") +
+                    `(${days[todayDate.getDay()]})`;
         }
         if (yesterdayMenuButton) {
             if (!isSameDate(todayDate, new Date())) {
@@ -138,7 +142,8 @@ function renderTomorrowMenu() {
                     "." +
                     todayMonth.padStart(2, "0") +
                     "." +
-                    todayDay.padStart(2, "0");
+                    todayDay.padStart(2, "0") +
+                    `(${days[todayDate.getDay()]})`;
         }
         if (yesterdayMenuButton) {
             if (!isSameDate(todayDate, new Date())) {
