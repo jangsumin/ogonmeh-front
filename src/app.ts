@@ -221,15 +221,28 @@ function renderMenu(): void {
     todayMonth.padStart(2, "0") +
     todayDay.padStart(2, "0");
   console.log(NamespaceUser.targetDate);
-  getMenu(NamespaceUser.targetDate).then(() => {
-    koreanFoodCornerSection_divElements?.forEach((div, idx) => {
-      div.textContent = NamespaceUser.menuData[0].koreanFoodCorner[idx];
-    });
-    hotCornerSection_divElements?.forEach((div, idx) => {
-      div.textContent = NamespaceUser.menuData[0].hotCorner[idx];
-    });
-    saladCornerSection_divElements?.forEach((div, idx) => {
-      div.textContent = NamespaceUser.menuData[0].saladCorner[idx];
-    });
+  koreanFoodCornerSection_divElements?.forEach((div, idx) => {
+    div.textContent = "";
   });
+  hotCornerSection_divElements?.forEach((div, idx) => {
+    div.textContent = "";
+  });
+  saladCornerSection_divElements?.forEach((div, idx) => {
+    div.textContent = "";
+  });
+  if (!(todayDate.getDay() === 0 || todayDate.getDay() === 6)) {
+    getMenu(NamespaceUser.targetDate).then(() => {
+      if (NamespaceUser.menuData[0]) {
+        koreanFoodCornerSection_divElements?.forEach((div, idx) => {
+          div.textContent = NamespaceUser.menuData[0].koreanFoodCorner[idx];
+        });
+        hotCornerSection_divElements?.forEach((div, idx) => {
+          div.textContent = NamespaceUser.menuData[0].hotCorner[idx];
+        });
+        saladCornerSection_divElements?.forEach((div, idx) => {
+          div.textContent = NamespaceUser.menuData[0].saladCorner[idx];
+        });
+      }
+    });
+  }
 }
