@@ -221,13 +221,13 @@ function renderMenu(): void {
     todayMonth.padStart(2, "0") +
     todayDay.padStart(2, "0");
   console.log(NamespaceUser.targetDate);
-  koreanFoodCornerSection_divElements?.forEach((div, idx) => {
+  koreanFoodCornerSection_divElements?.forEach((div) => {
     div.textContent = "";
   });
-  hotCornerSection_divElements?.forEach((div, idx) => {
+  hotCornerSection_divElements?.forEach((div) => {
     div.textContent = "";
   });
-  saladCornerSection_divElements?.forEach((div, idx) => {
+  saladCornerSection_divElements?.forEach((div) => {
     div.textContent = "";
   });
   if (!(todayDate.getDay() === 0 || todayDate.getDay() === 6)) {
@@ -243,6 +243,16 @@ function renderMenu(): void {
           div.textContent = NamespaceUser.menuData[0].saladCorner[idx];
         });
       }
+    });
+  } else {
+    koreanFoodCornerSection_divElements?.forEach((div) => {
+      div.textContent = "-";
+    });
+    hotCornerSection_divElements?.forEach((div) => {
+      div.textContent = "-";
+    });
+    saladCornerSection_divElements?.forEach((div) => {
+      div.textContent = "-";
     });
   }
 }

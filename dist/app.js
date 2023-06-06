@@ -182,13 +182,13 @@ function renderMenu() {
             todayMonth.padStart(2, "0") +
             todayDay.padStart(2, "0");
     console.log(NamespaceUser.targetDate);
-    koreanFoodCornerSection_divElements === null || koreanFoodCornerSection_divElements === void 0 ? void 0 : koreanFoodCornerSection_divElements.forEach((div, idx) => {
+    koreanFoodCornerSection_divElements === null || koreanFoodCornerSection_divElements === void 0 ? void 0 : koreanFoodCornerSection_divElements.forEach((div) => {
         div.textContent = "";
     });
-    hotCornerSection_divElements === null || hotCornerSection_divElements === void 0 ? void 0 : hotCornerSection_divElements.forEach((div, idx) => {
+    hotCornerSection_divElements === null || hotCornerSection_divElements === void 0 ? void 0 : hotCornerSection_divElements.forEach((div) => {
         div.textContent = "";
     });
-    saladCornerSection_divElements === null || saladCornerSection_divElements === void 0 ? void 0 : saladCornerSection_divElements.forEach((div, idx) => {
+    saladCornerSection_divElements === null || saladCornerSection_divElements === void 0 ? void 0 : saladCornerSection_divElements.forEach((div) => {
         div.textContent = "";
     });
     if (!(todayDate.getDay() === 0 || todayDate.getDay() === 6)) {
@@ -204,6 +204,17 @@ function renderMenu() {
                     div.textContent = NamespaceUser.menuData[0].saladCorner[idx];
                 });
             }
+        });
+    }
+    else {
+        koreanFoodCornerSection_divElements === null || koreanFoodCornerSection_divElements === void 0 ? void 0 : koreanFoodCornerSection_divElements.forEach((div) => {
+            div.textContent = "-";
+        });
+        hotCornerSection_divElements === null || hotCornerSection_divElements === void 0 ? void 0 : hotCornerSection_divElements.forEach((div) => {
+            div.textContent = "-";
+        });
+        saladCornerSection_divElements === null || saladCornerSection_divElements === void 0 ? void 0 : saladCornerSection_divElements.forEach((div) => {
+            div.textContent = "-";
         });
     }
 }
