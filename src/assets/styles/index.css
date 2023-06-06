@@ -141,7 +141,20 @@ header .main-nav-bar .dropdown {
 }
 
 header .main-nav-bar .dropdown .manager-login-button {
+  display: block;
   cursor: pointer;
+  margin: 20px;
+  padding: 0;
+  font-family: "Jua", sans-serif;
+  font-size: 15px;
+  color: var(--sub-ft-color);
+  background-color: var(--main-nav-color);
+  border: 0px solid var(--main-bd-color);
+  border-radius: 4px;
+}
+
+header .main-nav-bar .dropdown .today-visitor-counter,
+header .main-nav-bar .dropdown .accumulated-visitor-counter {
   margin: 20px;
   font-family: "Jua", sans-serif;
   font-size: 15px;
@@ -151,7 +164,9 @@ header .main-nav-bar .dropdown .manager-login-button {
   border-radius: 4px;
 }
 
-header .main-nav-bar .dropdown .manager-login-button::before {
+header .main-nav-bar .dropdown .manager-login-button::before,
+header .main-nav-bar .dropdown .today-visitor-counter::before,
+header .main-nav-bar .dropdown .accumulated-visitor-counter::before {
   content: "- ";
 }
 
