@@ -15,8 +15,8 @@ html {
 
 body {
   width: 100%;
-  min-width: 360px;
-  max-width: 720px;
+  min-width: 370px;
+  max-width: 740px;
   margin: 0 auto;
   background-color: var(--main-bg-color);
 }
@@ -178,7 +178,7 @@ main .date-button {
   grid-column: span 2;
   display: flex;
   justify-content: space-around;
-  width: 60%;
+  width: 80%;
   height: 30px;
   margin: 15px auto;
   padding: 20px 0;
