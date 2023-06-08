@@ -215,7 +215,7 @@ function postMenu(): void {
     }
   }
   console.log(data);
-  const URL: string = "http://localhost:4000/register";
+  const URL: string = "http://localhost:4000/post";
   fetch(URL, {
     method: "POST",
     headers: {
