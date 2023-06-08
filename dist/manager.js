@@ -87,6 +87,12 @@ function createListElement(date, idx) {
     if (!(date.getDay() === 0 || date.getDay() === 6) &&
         !compareDates(date, NamespaceManager.todayDate)) {
         li.addEventListener("click", () => {
+            // 날짜 변경 시 메뉴 데이터 초기화
+            NamespaceManager.menuData = {
+                koreanFoodCorner: [],
+                hotCorner: [],
+                saladCorner: [],
+            };
             if (NamespaceManager.dateText) {
                 NamespaceManager.dateText.textContent = [
                     String(NamespaceManager.todayDate.getFullYear()).slice(-2),
@@ -193,7 +199,14 @@ function postMenu() {
 // 관리자 페이지 : 업데이트 버튼 클릭을 통한 메뉴 POST 요청 실행
 function executeUpdateButton() {
     updateButton === null || updateButton === void 0 ? void 0 : updateButton.addEventListener("click", () => {
-        postMenu();
+        if (NamespaceManager.menuData.koreanFoodCorner.length ||
+            NamespaceManager.menuData.hotCorner.length ||
+            NamespaceManager.menuData.saladCorner.length) {
+            updateMenu();
+        }
+        else {
+            postMenu();
+        }
     });
 }
 executeUpdateButton();
@@ -249,3 +262,49 @@ function renderMenuInManagerPage() {
     });
 }
 renderMenuInManagerPage();
+function updateMenu() {
+    var _a, _b, _c, _d;
+    let formData;
+    const KOREAN_FOOD_MENU = "korean-food-menu";
+    const HOT_MENU = "hot-menu";
+    const SALAD_MENU = "salad-menu";
+    const data = {
+        koreanFoodCorner: [],
+        hotCorner: [],
+        saladCorner: [],
+    };
+    if (form) {
+        data.date = String((_a = NamespaceManager.dateText) === null || _a === void 0 ? void 0 : _a.textContent).replace(/ \/ /g, "");
+        formData = new FormData(form);
+        for (let [key, value] of formData.entries()) {
+            if (value === "") {
+                continue;
+            }
+            if (key.slice(0, -1) === KOREAN_FOOD_MENU) {
+                (_b = data.koreanFoodCorner) === null || _b === void 0 ? void 0 : _b.push(String(value).trim());
+            }
+            if (key.slice(0, -1) === HOT_MENU) {
+                (_c = data.hotCorner) === null || _c === void 0 ? void 0 : _c.push(String(value).trim());
+            }
+            if (key.slice(0, -1) === SALAD_MENU) {
+                (_d = data.saladCorner) === null || _d === void 0 ? void 0 : _d.push(String(value).trim());
+            }
+        }
+    }
+    console.log(data);
+    const updateURL = "http://localhost:4000/update";
+    fetch(updateURL, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+        .then((response) => response.json())
+        .then((result) => {
+        console.log(result);
+    })
+        .catch((error) => {
+        console.error(error);
+    });
+}

@@ -119,6 +119,12 @@ function createListElement(date: Date, idx: number): void {
     !compareDates(date, NamespaceManager.todayDate)
   ) {
     li.addEventListener("click", () => {
+      // 날짜 변경 시 메뉴 데이터 초기화
+      NamespaceManager.menuData = {
+        koreanFoodCorner: [],
+        hotCorner: [],
+        saladCorner: [],
+      };
       if (NamespaceManager.dateText) {
         NamespaceManager.dateText.textContent = [
           String(NamespaceManager.todayDate.getFullYear()).slice(-2),
@@ -235,7 +241,15 @@ function postMenu(): void {
 // 관리자 페이지 : 업데이트 버튼 클릭을 통한 메뉴 POST 요청 실행
 function executeUpdateButton() {
   updateButton?.addEventListener("click", () => {
-    postMenu();
+    if (
+      NamespaceManager.menuData.koreanFoodCorner.length ||
+      NamespaceManager.menuData.hotCorner.length ||
+      NamespaceManager.menuData.saladCorner.length
+    ) {
+      updateMenu();
+    } else {
+      postMenu();
+    }
   });
 }
 
@@ -300,3 +314,52 @@ function renderMenuInManagerPage() {
 }
 
 renderMenuInManagerPage();
+
+function updateMenu(): void {
+  let formData: FormData | null;
+  const KOREAN_FOOD_MENU: string = "korean-food-menu";
+  const HOT_MENU: string = "hot-menu";
+  const SALAD_MENU: string = "salad-menu";
+  const data: Menu = {
+    koreanFoodCorner: [],
+    hotCorner: [],
+    saladCorner: [],
+  };
+  if (form) {
+    data.date = String(NamespaceManager.dateText?.textContent).replace(
+      / \/ /g,
+      ""
+    );
+    formData = new FormData(form);
+    for (let [key, value] of formData.entries()) {
+      if (value === "") {
+        continue;
+      }
+      if (key.slice(0, -1) === KOREAN_FOOD_MENU) {
+        data.koreanFoodCorner?.push(String(value).trim());
+      }
+      if (key.slice(0, -1) === HOT_MENU) {
+        data.hotCorner?.push(String(value).trim());
+      }
+      if (key.slice(0, -1) === SALAD_MENU) {
+        data.saladCorner?.push(String(value).trim());
+      }
+    }
+  }
+  console.log(data);
+  const updateURL: string = "http://localhost:4000/update";
+  fetch(updateURL, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => response.json())
+    .then((result) => {
+      console.log(result);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+}
