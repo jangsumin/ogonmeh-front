@@ -3,7 +3,7 @@ namespace NamespaceManager {
   export const dateText: HTMLInputElement | null =
     document.querySelector(".date-text");
   export let targetDate = "";
-  export let menuData: Array<Menu>;
+  export let menuData: Menu;
   export const todayDate: Date = new Date();
 }
 
@@ -127,14 +127,13 @@ function createListElement(date: Date, idx: number): void {
         NamespaceManager.targetDate = NamespaceManager.dateText.textContent;
         getMenuInManagerPage(NamespaceManager.targetDate).then(() => {
           koreanFoodCorner_divElements?.forEach((div, idx) => {
-            div.textContent =
-              NamespaceManager.menuData[0].koreanFoodCorner[idx];
+            div.textContent = NamespaceManager.menuData.koreanFoodCorner[idx];
           });
           hotCorner_divElements?.forEach((div, idx) => {
-            div.textContent = NamespaceManager.menuData[0].hotCorner[idx];
+            div.textContent = NamespaceManager.menuData.hotCorner[idx];
           });
           saladCorner_divElements?.forEach((div, idx) => {
-            div.textContent = NamespaceManager.menuData[0].saladCorner[idx];
+            div.textContent = NamespaceManager.menuData.saladCorner[idx];
           });
         });
       }
@@ -289,13 +288,13 @@ function getMenuInManagerPage(targetDate: string): Promise<void> {
 function renderMenuInManagerPage() {
   getMenuInManagerPage(NamespaceManager.targetDate).then(() => {
     koreanFoodCorner_divElements?.forEach((div, idx) => {
-      div.textContent = NamespaceManager.menuData[0].koreanFoodCorner[idx];
+      div.textContent = NamespaceManager.menuData.koreanFoodCorner[idx];
     });
     hotCorner_divElements?.forEach((div, idx) => {
-      div.textContent = NamespaceManager.menuData[0].hotCorner[idx];
+      div.textContent = NamespaceManager.menuData.hotCorner[idx];
     });
     saladCorner_divElements?.forEach((div, idx) => {
-      div.textContent = NamespaceManager.menuData[0].saladCorner[idx];
+      div.textContent = NamespaceManager.menuData.saladCorner[idx];
     });
   });
 }

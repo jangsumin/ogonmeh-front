@@ -11,7 +11,7 @@ namespace NamespaceUser {
   export const dateText: HTMLInputElement | null =
     document.querySelector(".date-text");
   export let targetDate: string = "";
-  export let menuData: Array<Menu>;
+  export let menuData: Menu;
   export const todayDate: Date = new Date();
 }
 
@@ -232,15 +232,15 @@ function renderMenu(): void {
   });
   if (!(todayDate.getDay() === 0 || todayDate.getDay() === 6)) {
     getMenu(NamespaceUser.targetDate).then(() => {
-      if (NamespaceUser.menuData[0]) {
+      if (NamespaceUser.menuData) {
         koreanFoodCornerSection_divElements?.forEach((div, idx) => {
-          div.textContent = NamespaceUser.menuData[0].koreanFoodCorner[idx];
+          div.textContent = NamespaceUser.menuData.koreanFoodCorner[idx];
         });
         hotCornerSection_divElements?.forEach((div, idx) => {
-          div.textContent = NamespaceUser.menuData[0].hotCorner[idx];
+          div.textContent = NamespaceUser.menuData.hotCorner[idx];
         });
         saladCornerSection_divElements?.forEach((div, idx) => {
-          div.textContent = NamespaceUser.menuData[0].saladCorner[idx];
+          div.textContent = NamespaceUser.menuData.saladCorner[idx];
         });
       }
     });

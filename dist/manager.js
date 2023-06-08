@@ -95,14 +95,13 @@ function createListElement(date, idx) {
                 NamespaceManager.targetDate = NamespaceManager.dateText.textContent;
                 getMenuInManagerPage(NamespaceManager.targetDate).then(() => {
                     koreanFoodCorner_divElements === null || koreanFoodCorner_divElements === void 0 ? void 0 : koreanFoodCorner_divElements.forEach((div, idx) => {
-                        div.textContent =
-                            NamespaceManager.menuData[0].koreanFoodCorner[idx];
+                        div.textContent = NamespaceManager.menuData.koreanFoodCorner[idx];
                     });
                     hotCorner_divElements === null || hotCorner_divElements === void 0 ? void 0 : hotCorner_divElements.forEach((div, idx) => {
-                        div.textContent = NamespaceManager.menuData[0].hotCorner[idx];
+                        div.textContent = NamespaceManager.menuData.hotCorner[idx];
                     });
                     saladCorner_divElements === null || saladCorner_divElements === void 0 ? void 0 : saladCorner_divElements.forEach((div, idx) => {
-                        div.textContent = NamespaceManager.menuData[0].saladCorner[idx];
+                        div.textContent = NamespaceManager.menuData.saladCorner[idx];
                     });
                 });
             }
@@ -239,13 +238,13 @@ function getMenuInManagerPage(targetDate) {
 function renderMenuInManagerPage() {
     getMenuInManagerPage(NamespaceManager.targetDate).then(() => {
         koreanFoodCorner_divElements === null || koreanFoodCorner_divElements === void 0 ? void 0 : koreanFoodCorner_divElements.forEach((div, idx) => {
-            div.textContent = NamespaceManager.menuData[0].koreanFoodCorner[idx];
+            div.textContent = NamespaceManager.menuData.koreanFoodCorner[idx];
         });
         hotCorner_divElements === null || hotCorner_divElements === void 0 ? void 0 : hotCorner_divElements.forEach((div, idx) => {
-            div.textContent = NamespaceManager.menuData[0].hotCorner[idx];
+            div.textContent = NamespaceManager.menuData.hotCorner[idx];
         });
         saladCorner_divElements === null || saladCorner_divElements === void 0 ? void 0 : saladCorner_divElements.forEach((div, idx) => {
-            div.textContent = NamespaceManager.menuData[0].saladCorner[idx];
+            div.textContent = NamespaceManager.menuData.saladCorner[idx];
         });
     });
 }

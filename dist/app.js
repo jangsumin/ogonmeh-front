@@ -193,15 +193,15 @@ function renderMenu() {
     });
     if (!(todayDate.getDay() === 0 || todayDate.getDay() === 6)) {
         getMenu(NamespaceUser.targetDate).then(() => {
-            if (NamespaceUser.menuData[0]) {
+            if (NamespaceUser.menuData) {
                 koreanFoodCornerSection_divElements === null || koreanFoodCornerSection_divElements === void 0 ? void 0 : koreanFoodCornerSection_divElements.forEach((div, idx) => {
-                    div.textContent = NamespaceUser.menuData[0].koreanFoodCorner[idx];
+                    div.textContent = NamespaceUser.menuData.koreanFoodCorner[idx];
                 });
                 hotCornerSection_divElements === null || hotCornerSection_divElements === void 0 ? void 0 : hotCornerSection_divElements.forEach((div, idx) => {
-                    div.textContent = NamespaceUser.menuData[0].hotCorner[idx];
+                    div.textContent = NamespaceUser.menuData.hotCorner[idx];
                 });
                 saladCornerSection_divElements === null || saladCornerSection_divElements === void 0 ? void 0 : saladCornerSection_divElements.forEach((div, idx) => {
-                    div.textContent = NamespaceUser.menuData[0].saladCorner[idx];
+                    div.textContent = NamespaceUser.menuData.saladCorner[idx];
                 });
             }
         });
