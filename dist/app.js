@@ -218,3 +218,11 @@ function renderMenu() {
         });
     }
 }
+// 사용자 페이지 : 방문자 수 카운팅
+function visitorCount() {
+    if (!document.cookie.includes("visited=true")) {
+        let date = new Date(Date.now() + 86400e3);
+        document.cookie = "visited=true; expires=" + date.toUTCString();
+    }
+}
+visitorCount();
