@@ -13,6 +13,7 @@ namespace NamespaceUser {
   export let targetDate: string = "";
   export let menuData: Menu;
   export const todayDate: Date = new Date();
+  export let count: Number;
 }
 
 // 드롭다운 요소
@@ -69,6 +70,10 @@ const hotCornerSection_divElements: NodeListOf<HTMLDivElement> | undefined =
 // 샐러드 코너 section 내 모든 div 요소들
 const saladCornerSection_divElements: NodeListOf<HTMLDivElement> | undefined =
   saladCornerSection?.querySelectorAll("div");
+// 누적 방문자 수
+const accumulatedVisitor: HTMLInputElement | null = document.querySelector(
+  ".accumulated-visitor"
+);
 
 // 사용자 페이지 : 드롭다운 기능 수행
 function executeDropdown(): void {
@@ -257,12 +262,66 @@ function renderMenu(): void {
   }
 }
 
+// 사용자 페이지 : 방문자 데이터를 GET 요청
+function getVisitor(): Promise<void> {
+  const getURL: string = "http://localhost:4000/getCount";
+  return fetch(getURL)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("데이터 가져오기 실패");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      NamespaceUser.count = data.count;
+      console.log(NamespaceUser.count);
+    })
+    .catch((error) => {
+      console.error("오류:", error);
+    });
+}
+
+// 사용자 페이지 : 방문자 데이터를 UPDATE 요청
+function updateVisitor(): Promise<void> {
+  const updateURL: string = "http://localhost:4000/updateCount";
+  return fetch(updateURL, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("데이터 가져오기 실패");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      NamespaceUser.count = data.count;
+      console.log(NamespaceUser.count);
+    })
+    .catch((error) => {
+      console.error("오류:", error);
+    });
+}
+
 // 사용자 페이지 : 방문자 수 카운팅
-function visitorCount() {
+function countVisitor(): void {
   if (!document.cookie.includes("visited=true")) {
     let date: Date = new Date(Date.now() + 86400e3);
     document.cookie = "visited=true; expires=" + date.toUTCString();
+    updateVisitor().then(() => {
+      if (accumulatedVisitor) {
+        accumulatedVisitor.textContent = NamespaceUser.count.toString();
+      }
+    });
+  } else {
+    getVisitor().then(() => {
+      if (accumulatedVisitor) {
+        accumulatedVisitor.textContent = NamespaceUser.count.toString();
+      }
+    });
   }
 }
 
-visitorCount();
+countVisitor();
