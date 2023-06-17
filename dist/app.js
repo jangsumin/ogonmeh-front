@@ -43,6 +43,8 @@ const hotCornerSection_divElements = hotCornerSection === null || hotCornerSecti
 const saladCornerSection_divElements = saladCornerSection === null || saladCornerSection === void 0 ? void 0 : saladCornerSection.querySelectorAll("div");
 // 누적 방문자 수
 const accumulatedVisitor = document.querySelector(".accumulated-visitor");
+// 로그인 버튼
+const loginButton = document.querySelector(".login-button");
 // 사용자 페이지 : 드롭다운 기능 수행
 function executeDropdown() {
     let isDropdownOpen = false;
@@ -281,3 +283,40 @@ function countVisitor() {
     }
 }
 countVisitor();
+function login() {
+    loginButton === null || loginButton === void 0 ? void 0 : loginButton.addEventListener("click", () => {
+        console.log(checkLogin());
+    });
+}
+login();
+function checkLogin() {
+    const loginURL = "http://localhost:4000/login";
+    // 아이디
+    const id = document.querySelector(".id-input");
+    // 비밀번호
+    const password = document.querySelector(".password-input");
+    let isSuccessToLogin = true;
+    const data = {
+        id: id === null || id === void 0 ? void 0 : id.value,
+        password: password === null || password === void 0 ? void 0 : password.value,
+    };
+    fetch(loginURL, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+    })
+        .then((response) => {
+        return response.json();
+    })
+        .then((data) => {
+        if (data.success === false) {
+            isSuccessToLogin = false;
+        }
+    })
+        .catch((error) => {
+        console.error("오류:", error);
+    });
+    return isSuccessToLogin;
+}

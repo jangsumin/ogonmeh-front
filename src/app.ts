@@ -74,6 +74,9 @@ const saladCornerSection_divElements: NodeListOf<HTMLDivElement> | undefined =
 const accumulatedVisitor: HTMLInputElement | null = document.querySelector(
   ".accumulated-visitor"
 );
+// 로그인 버튼
+const loginButton: HTMLInputElement | null =
+  document.querySelector(".login-button");
 
 // 사용자 페이지 : 드롭다운 기능 수행
 function executeDropdown(): void {
@@ -325,3 +328,44 @@ function countVisitor(): void {
 }
 
 countVisitor();
+
+function login(): void {
+  loginButton?.addEventListener("click", () => {
+    console.log(checkLogin());
+  });
+}
+
+login();
+
+function checkLogin(): boolean {
+  const loginURL: string = "http://localhost:4000/login";
+  // 아이디
+  const id: HTMLInputElement | null = document.querySelector(".id-input");
+  // 비밀번호
+  const password: HTMLInputElement | null =
+    document.querySelector(".password-input");
+  let isSuccessToLogin: boolean = true;
+  const data = {
+    id: id?.value,
+    password: password?.value,
+  };
+  fetch(loginURL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      if (data.success === false) {
+        isSuccessToLogin = false;
+      }
+    })
+    .catch((error) => {
+      console.error("오류:", error);
+    });
+  return isSuccessToLogin;
+}
