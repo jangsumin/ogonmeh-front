@@ -14,6 +14,7 @@ namespace NamespaceUser {
   export let menuData: Menu;
   export const todayDate: Date = new Date();
   export let count: Number;
+  export let isSuccessToLogin: boolean = true;
 }
 
 // 드롭다운 요소
@@ -331,20 +332,19 @@ countVisitor();
 
 function login(): void {
   loginButton?.addEventListener("click", () => {
-    console.log(checkLogin());
+    checkLogin();
   });
 }
 
 login();
 
-function checkLogin(): boolean {
+function checkLogin(): void {
   const loginURL: string = "http://localhost:4000/login";
   // 아이디
   const id: HTMLInputElement | null = document.querySelector(".id-input");
   // 비밀번호
   const password: HTMLInputElement | null =
     document.querySelector(".password-input");
-  let isSuccessToLogin: boolean = true;
   const data = {
     id: id?.value,
     password: password?.value,
@@ -361,11 +361,15 @@ function checkLogin(): boolean {
     })
     .then((data) => {
       if (data.success === false) {
-        isSuccessToLogin = false;
+        NamespaceUser.isSuccessToLogin = false;
+      }
+      if (NamespaceUser.isSuccessToLogin) {
+        window.location.href = "manager.html";
+      } else {
+        window.location.reload();
       }
     })
     .catch((error) => {
       console.error("오류:", error);
     });
-  return isSuccessToLogin;
 }

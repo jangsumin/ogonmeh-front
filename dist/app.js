@@ -5,6 +5,7 @@ var NamespaceUser;
     NamespaceUser.dateText = document.querySelector(".date-text");
     NamespaceUser.targetDate = "";
     NamespaceUser.todayDate = new Date();
+    NamespaceUser.isSuccessToLogin = true;
 })(NamespaceUser || (NamespaceUser = {}));
 // 드롭다운 요소
 const dropdown = document.querySelector(".dropdown");
@@ -285,7 +286,7 @@ function countVisitor() {
 countVisitor();
 function login() {
     loginButton === null || loginButton === void 0 ? void 0 : loginButton.addEventListener("click", () => {
-        console.log(checkLogin());
+        checkLogin();
     });
 }
 login();
@@ -295,7 +296,6 @@ function checkLogin() {
     const id = document.querySelector(".id-input");
     // 비밀번호
     const password = document.querySelector(".password-input");
-    let isSuccessToLogin = true;
     const data = {
         id: id === null || id === void 0 ? void 0 : id.value,
         password: password === null || password === void 0 ? void 0 : password.value,
@@ -312,11 +312,16 @@ function checkLogin() {
     })
         .then((data) => {
         if (data.success === false) {
-            isSuccessToLogin = false;
+            NamespaceUser.isSuccessToLogin = false;
+        }
+        if (NamespaceUser.isSuccessToLogin) {
+            window.location.href = "manager.html";
+        }
+        else {
+            window.location.reload();
         }
     })
         .catch((error) => {
         console.error("오류:", error);
     });
-    return isSuccessToLogin;
 }
