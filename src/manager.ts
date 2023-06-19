@@ -315,6 +315,7 @@ function renderMenuInManagerPage() {
 
 renderMenuInManagerPage();
 
+// 관리자 페이지 : 기존 DB에 존재하는 날짜의 메뉴를 업데이트
 function updateMenu(): void {
   let formData: FormData | null;
   const KOREAN_FOOD_MENU: string = "korean-food-menu";
@@ -363,3 +364,12 @@ function updateMenu(): void {
       console.error(error);
     });
 }
+
+// 관리자 페이지 : 로그인 쿠키가 없으면 관리자 페이지로의 접근을 제한
+function checkAccessToManagerPage() {
+  if (!document.cookie.includes("loggedIn=true")) {
+    window.location.href = "index.html";
+  }
+}
+
+checkAccessToManagerPage();
