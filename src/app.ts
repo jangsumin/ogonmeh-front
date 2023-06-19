@@ -330,6 +330,7 @@ function countVisitor(): void {
 
 countVisitor();
 
+// 사용자 페이지 : 로그인 버튼 클릭 시 로그인 정보 확인
 function login(): void {
   loginButton?.addEventListener("click", () => {
     checkLogin();
@@ -338,6 +339,7 @@ function login(): void {
 
 login();
 
+// 사용자 페이지 : 계정 확인 API 사용으로, 관리자 페이지 혹은 새로 고침
 function checkLogin(): void {
   const loginURL: string = "http://localhost:4000/login";
   // 아이디
@@ -362,7 +364,11 @@ function checkLogin(): void {
     .then((data) => {
       if (data.success === false) {
         NamespaceUser.isSuccessToLogin = false;
+      } else {
+        let date: Date = new Date(Date.now() + 86400e3);
+        document.cookie = "loggedIn=true; expires=" + date.toUTCString();
       }
+
       if (NamespaceUser.isSuccessToLogin) {
         window.location.href = "manager.html";
       } else {

@@ -284,12 +284,14 @@ function countVisitor() {
     }
 }
 countVisitor();
+// 사용자 페이지 : 로그인 버튼 클릭 시 로그인 정보 확인
 function login() {
     loginButton === null || loginButton === void 0 ? void 0 : loginButton.addEventListener("click", () => {
         checkLogin();
     });
 }
 login();
+// 사용자 페이지 : 계정 확인 API 사용으로, 관리자 페이지 혹은 새로 고침
 function checkLogin() {
     const loginURL = "http://localhost:4000/login";
     // 아이디
@@ -313,6 +315,10 @@ function checkLogin() {
         .then((data) => {
         if (data.success === false) {
             NamespaceUser.isSuccessToLogin = false;
+        }
+        else {
+            let date = new Date(Date.now() + 86400e3);
+            document.cookie = "loggedIn=true; expires=" + date.toUTCString();
         }
         if (NamespaceUser.isSuccessToLogin) {
             window.location.href = "manager.html";
