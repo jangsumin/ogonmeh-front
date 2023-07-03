@@ -153,9 +153,10 @@ header .main-nav-bar .dropdown .manager-login-button {
   border-radius: 4px;
 }
 
-header .main-nav-bar .dropdown .today-visitor-counter,
 header .main-nav-bar .dropdown .accumulated-visitor-counter {
-  margin: 20px;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
   font-family: "Jua", sans-serif;
   font-size: 15px;
   color: var(--sub-ft-color);
@@ -164,9 +165,7 @@ header .main-nav-bar .dropdown .accumulated-visitor-counter {
   border-radius: 4px;
 }
 
-header .main-nav-bar .dropdown .manager-login-button::before,
-header .main-nav-bar .dropdown .today-visitor-counter::before,
-header .main-nav-bar .dropdown .accumulated-visitor-counter::before {
+header .main-nav-bar .dropdown .manager-login-button::before {
   content: "- ";
 }
 
