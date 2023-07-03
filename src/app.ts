@@ -168,6 +168,18 @@ function renderYesterdayMenu(): void {
         yesterdayMenuButton.style.visibility = "hidden";
       }
     }
+    if (tomorrowMenuButton) {
+      if (
+        !isSameDate(
+          todayDate,
+          new Date(new Date().setDate(new Date().getDate() + 28))
+        )
+      ) {
+        tomorrowMenuButton.style.visibility = "visible";
+      } else {
+        tomorrowMenuButton.style.visibility = "hidden";
+      }
+    }
     renderMenu();
   });
 }
@@ -195,6 +207,18 @@ function renderTomorrowMenu(): void {
         yesterdayMenuButton.style.visibility = "visible";
       } else {
         yesterdayMenuButton.style.visibility = "hidden";
+      }
+    }
+    if (tomorrowMenuButton) {
+      if (
+        !isSameDate(
+          todayDate,
+          new Date(new Date().setDate(new Date().getDate() + 28))
+        )
+      ) {
+        tomorrowMenuButton.style.visibility = "visible";
+      } else {
+        tomorrowMenuButton.style.visibility = "hidden";
       }
     }
     renderMenu();
