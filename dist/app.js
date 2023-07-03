@@ -109,6 +109,11 @@ renderTodayMenu();
 // 사용자 페이지 : 현재 기준 어제로 가는 버튼을 누르고 나서 메뉴를 렌더링
 function renderYesterdayMenu() {
     yesterdayMenuButton === null || yesterdayMenuButton === void 0 ? void 0 : yesterdayMenuButton.addEventListener("click", () => {
+        NamespaceUser.menuData = {
+            koreanFoodCorner: [],
+            hotCorner: [],
+            saladCorner: [],
+        };
         todayDate = new Date(todayDate.setDate(todayDate.getDate() - 1));
         todayYear = String(todayDate.getFullYear());
         todayMonth = String(todayDate.getMonth() + 1);
@@ -145,6 +150,11 @@ renderYesterdayMenu();
 // 사용자 페이지 : 현재 기준 내일로 가는 버튼을 누르고 나서 메뉴를 렌더링
 function renderTomorrowMenu() {
     tomorrowMenuButton === null || tomorrowMenuButton === void 0 ? void 0 : tomorrowMenuButton.addEventListener("click", () => {
+        NamespaceUser.menuData = {
+            koreanFoodCorner: [],
+            hotCorner: [],
+            saladCorner: [],
+        };
         todayDate = new Date(todayDate.setDate(todayDate.getDate() + 1));
         todayYear = String(todayDate.getFullYear());
         todayMonth = String(todayDate.getMonth() + 1);
