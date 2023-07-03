@@ -3,7 +3,11 @@ namespace NamespaceManager {
   export const dateText: HTMLInputElement | null =
     document.querySelector(".date-text");
   export let targetDate = "";
-  export let menuData: Menu;
+  export let menuData: Menu = {
+    koreanFoodCorner: [],
+    hotCorner: [],
+    saladCorner: [],
+  };
   export const todayDate: Date = new Date();
 }
 

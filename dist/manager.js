@@ -4,6 +4,11 @@ var NamespaceManager;
 (function (NamespaceManager) {
     NamespaceManager.dateText = document.querySelector(".date-text");
     NamespaceManager.targetDate = "";
+    NamespaceManager.menuData = {
+        koreanFoodCorner: [],
+        hotCorner: [],
+        saladCorner: [],
+    };
     NamespaceManager.todayDate = new Date();
 })(NamespaceManager || (NamespaceManager = {}));
 // 1주차
