@@ -200,7 +200,6 @@ function getMenu(targetDate) {
     })
         .then((data) => {
         NamespaceUser.menuData = data;
-        console.log(NamespaceUser.menuData);
     })
         .catch((error) => {
         console.error("오류:", error);
@@ -212,7 +211,6 @@ function renderMenu() {
         todayYear.slice(-2) +
             todayMonth.padStart(2, "0") +
             todayDay.padStart(2, "0");
-    console.log(NamespaceUser.targetDate);
     koreanFoodCornerSection_divElements === null || koreanFoodCornerSection_divElements === void 0 ? void 0 : koreanFoodCornerSection_divElements.forEach((div) => {
         div.textContent = "";
     });
@@ -261,7 +259,6 @@ function getVisitor() {
     })
         .then((data) => {
         NamespaceUser.count = data.count;
-        console.log(NamespaceUser.count);
     })
         .catch((error) => {
         console.error("오류:", error);
@@ -284,7 +281,6 @@ function updateVisitor() {
     })
         .then((data) => {
         NamespaceUser.count = data.count;
-        console.log(NamespaceUser.count);
     })
         .catch((error) => {
         console.error("오류:", error);

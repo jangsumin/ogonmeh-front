@@ -250,7 +250,6 @@ function getMenu(targetDate: string): Promise<void> {
     })
     .then((data) => {
       NamespaceUser.menuData = data;
-      console.log(NamespaceUser.menuData);
     })
     .catch((error) => {
       console.error("오류:", error);
@@ -263,7 +262,6 @@ function renderMenu(): void {
     todayYear.slice(-2) +
     todayMonth.padStart(2, "0") +
     todayDay.padStart(2, "0");
-  console.log(NamespaceUser.targetDate);
   koreanFoodCornerSection_divElements?.forEach((div) => {
     div.textContent = "";
   });
@@ -312,7 +310,6 @@ function getVisitor(): Promise<void> {
     })
     .then((data) => {
       NamespaceUser.count = data.count;
-      console.log(NamespaceUser.count);
     })
     .catch((error) => {
       console.error("오류:", error);
@@ -336,7 +333,6 @@ function updateVisitor(): Promise<void> {
     })
     .then((data) => {
       NamespaceUser.count = data.count;
-      console.log(NamespaceUser.count);
     })
     .catch((error) => {
       console.error("오류:", error);
