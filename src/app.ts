@@ -15,6 +15,8 @@ namespace NamespaceUser {
   export const todayDate: Date = new Date();
   export let count: Number;
   export let isSuccessToLogin: boolean = true;
+  export const backURL =
+    "https://port-0-ogonmeh-back-kvmh2mljv4mx4z.sel4.cloudtype.app/";
 }
 
 // 드롭다운 요소
@@ -239,8 +241,10 @@ renderTomorrowMenu();
 
 // 사용자 페이지 : 메뉴 데이터를 GET 요청
 function getMenu(targetDate: string): Promise<void> {
+  // const getURL: string =
+  //   "http://localhost:4000/get" + `/${targetDate.replace(/\s\/\s/g, "")}`;
   const getURL: string =
-    "http://localhost:4000/get" + `/${targetDate.replace(/\s\/\s/g, "")}`;
+    `${NamespaceUser.backURL}get` + `/${targetDate.replace(/\s\/\s/g, "")}`;
   return fetch(getURL)
     .then((response) => {
       if (!response.ok) {
@@ -300,7 +304,8 @@ function renderMenu(): void {
 
 // 사용자 페이지 : 방문자 데이터를 GET 요청
 function getVisitor(): Promise<void> {
-  const getURL: string = "http://localhost:4000/getCount";
+  // const getURL: string = "http://localhost:4000/getCount";
+  const getURL: string = `${NamespaceUser.backURL}getCount`;
   return fetch(getURL)
     .then((response) => {
       if (!response.ok) {
@@ -318,7 +323,8 @@ function getVisitor(): Promise<void> {
 
 // 사용자 페이지 : 방문자 데이터를 UPDATE 요청
 function updateVisitor(): Promise<void> {
-  const updateURL: string = "http://localhost:4000/updateCount";
+  // const updateURL: string = "http://localhost:4000/updateCount";
+  const updateURL: string = `${NamespaceUser.backURL}updateCount`;
   return fetch(updateURL, {
     method: "PUT",
     headers: {
@@ -371,7 +377,8 @@ login();
 
 // 사용자 페이지 : 계정 확인 API 사용으로, 관리자 페이지 혹은 새로 고침
 function checkLogin(): void {
-  const loginURL: string = "http://localhost:4000/login";
+  // const loginURL: string = "http://localhost:4000/login";
+  const loginURL: string = `${NamespaceUser.backURL}login`;
   // 아이디
   const id: HTMLInputElement | null = document.querySelector(".id-input");
   // 비밀번호

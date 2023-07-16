@@ -6,6 +6,7 @@ var NamespaceUser;
     NamespaceUser.targetDate = "";
     NamespaceUser.todayDate = new Date();
     NamespaceUser.isSuccessToLogin = true;
+    NamespaceUser.backURL = "https://port-0-ogonmeh-back-kvmh2mljv4mx4z.sel4.cloudtype.app/";
 })(NamespaceUser || (NamespaceUser = {}));
 // 드롭다운 요소
 const dropdown = document.querySelector(".dropdown");
@@ -190,7 +191,9 @@ function renderTomorrowMenu() {
 renderTomorrowMenu();
 // 사용자 페이지 : 메뉴 데이터를 GET 요청
 function getMenu(targetDate) {
-    const getURL = "http://localhost:4000/get" + `/${targetDate.replace(/\s\/\s/g, "")}`;
+    // const getURL: string =
+    //   "http://localhost:4000/get" + `/${targetDate.replace(/\s\/\s/g, "")}`;
+    const getURL = `${NamespaceUser.backURL}get` + `/${targetDate.replace(/\s\/\s/g, "")}`;
     return fetch(getURL)
         .then((response) => {
         if (!response.ok) {
@@ -249,7 +252,8 @@ function renderMenu() {
 }
 // 사용자 페이지 : 방문자 데이터를 GET 요청
 function getVisitor() {
-    const getURL = "http://localhost:4000/getCount";
+    // const getURL: string = "http://localhost:4000/getCount";
+    const getURL = `${NamespaceUser.backURL}getCount`;
     return fetch(getURL)
         .then((response) => {
         if (!response.ok) {
@@ -266,7 +270,8 @@ function getVisitor() {
 }
 // 사용자 페이지 : 방문자 데이터를 UPDATE 요청
 function updateVisitor() {
-    const updateURL = "http://localhost:4000/updateCount";
+    // const updateURL: string = "http://localhost:4000/updateCount";
+    const updateURL = `${NamespaceUser.backURL}updateCount`;
     return fetch(updateURL, {
         method: "PUT",
         headers: {
@@ -315,7 +320,8 @@ function login() {
 login();
 // 사용자 페이지 : 계정 확인 API 사용으로, 관리자 페이지 혹은 새로 고침
 function checkLogin() {
-    const loginURL = "http://localhost:4000/login";
+    // const loginURL: string = "http://localhost:4000/login";
+    const loginURL = `${NamespaceUser.backURL}login`;
     // 아이디
     const id = document.querySelector(".id-input");
     // 비밀번호

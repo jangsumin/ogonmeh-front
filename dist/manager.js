@@ -10,6 +10,7 @@ var NamespaceManager;
         saladCorner: [],
     };
     NamespaceManager.todayDate = new Date();
+    NamespaceManager.backURL = "https://port-0-ogonmeh-back-kvmh2mljv4mx4z.sel4.cloudtype.app/";
 })(NamespaceManager || (NamespaceManager = {}));
 // 1주차
 const dateList1 = document.querySelector(".date-list1");
@@ -185,7 +186,8 @@ function postMenu() {
         }
     }
     console.log(data);
-    const URL = "http://localhost:4000/post";
+    // const URL: string = "http://localhost:4000/post";
+    const URL = `${NamespaceManager.backURL}post`;
     fetch(URL, {
         method: "POST",
         headers: {
@@ -236,7 +238,9 @@ function stopAccessToWeekend() {
 stopAccessToWeekend();
 // 관리자 페이지 : 선택한 날짜의 메뉴를 GET 요청
 function getMenuInManagerPage(targetDate) {
-    const getURL = "http://localhost:4000/get" + `/${targetDate.replace(/\s\/\s/g, "")}`;
+    // const getURL: string =
+    //   "http://localhost:4000/get" + `/${targetDate.replace(/\s\/\s/g, "")}`;
+    const getURL = `${NamespaceManager.backURL}get` + `/${targetDate.replace(/\s\/\s/g, "")}`;
     return fetch(getURL)
         .then((response) => {
         if (!response.ok) {
@@ -298,7 +302,8 @@ function updateMenu() {
         }
     }
     console.log(data);
-    const updateURL = "http://localhost:4000/update";
+    // const updateURL: string = "http://localhost:4000/update";
+    const updateURL = `${NamespaceManager.backURL}update`;
     fetch(updateURL, {
         method: "PATCH",
         headers: {
