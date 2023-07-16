@@ -105,6 +105,7 @@ function createListElement(date, idx) {
                     li.textContent,
                 ].join(" / ");
                 NamespaceManager.targetDate = NamespaceManager.dateText.textContent;
+                stopAccessToWeekend();
                 getMenuInManagerPage(NamespaceManager.targetDate).then(() => {
                     koreanFoodCorner_divElements === null || koreanFoodCorner_divElements === void 0 ? void 0 : koreanFoodCorner_divElements.forEach((div, idx) => {
                         div.textContent = NamespaceManager.menuData.koreanFoodCorner[idx];
@@ -210,17 +211,23 @@ function executeUpdateButton() {
             NamespaceManager.menuData.hotCorner.length ||
             NamespaceManager.menuData.saladCorner.length) {
             updateMenu();
+            alert("메뉴가 갱신되었습니다.");
         }
         else {
             postMenu();
+            alert("메뉴가 생성되었습니다.");
         }
     });
 }
 executeUpdateButton();
 // 관리자 페이지 : 오늘의 날짜가 주말일 때 업데이트 버튼이 보이지 않고, input 요소에 접근이 불가능한 기능 수행
 function stopAccessToWeekend() {
-    if (NamespaceManager.todayDate.getDay() === 0 ||
-        NamespaceManager.todayDate.getDay() === 6) {
+    const splitDateText = NamespaceManager.targetDate.split(/\s\/\s/);
+    const year = parseInt("20" + splitDateText[0]);
+    const month = parseInt(splitDateText[1]) - 1;
+    const day = parseInt(splitDateText[2]);
+    if (new Date(year, month, day).getDay() === 0 ||
+        new Date(year, month, day).getDay() === 6) {
         if (updateButton) {
             updateButton.style.display = "none";
         }
@@ -232,6 +239,20 @@ function stopAccessToWeekend() {
         });
         saladCorner_inputElements === null || saladCorner_inputElements === void 0 ? void 0 : saladCorner_inputElements.forEach((input) => {
             input.disabled = true;
+        });
+    }
+    else {
+        if (updateButton) {
+            updateButton.style.display = "";
+        }
+        koreanFoodCorner_inputElements === null || koreanFoodCorner_inputElements === void 0 ? void 0 : koreanFoodCorner_inputElements.forEach((input) => {
+            input.disabled = false;
+        });
+        hotCorner_inputElements === null || hotCorner_inputElements === void 0 ? void 0 : hotCorner_inputElements.forEach((input) => {
+            input.disabled = false;
+        });
+        saladCorner_inputElements === null || saladCorner_inputElements === void 0 ? void 0 : saladCorner_inputElements.forEach((input) => {
+            input.disabled = false;
         });
     }
 }
